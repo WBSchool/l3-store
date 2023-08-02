@@ -1,0 +1,29 @@
+.header {
+  background: linear-gradient(90deg, #cb11ab, #481173);
+  padding: 30px;
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  margin-bottom: 30px;
+
+  &__in {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+
+  &__buttons {
+    margin-left: auto;
+  }
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .logo {
+    color: #fff;
+  }
+}

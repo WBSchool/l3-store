@@ -1,0 +1,11 @@
+.homepage {
+  &__notifies {
+    &:not(:empty) {
+      margin-bottom: 3em;
+    }
+  }
+
+  &__popular {
+    margin-top: 30px;
+  }
+}

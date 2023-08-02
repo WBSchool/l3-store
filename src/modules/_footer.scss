@@ -1,0 +1,19 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  padding: 30px;
+  background: var(--plate-color);
+  border-radius: var(--border-radius);
+
+  &__nav {
+    color: var(--text-light-color);
+    display: flex;
+    gap: 20px;
+
+    a {
+      text-decoration: none;
+    }
+  }
+}

@@ -59,7 +59,7 @@ module.exports = (middlewares, devServer) => {
     }, 2500);
   });
 
-  app.get('/api/sendEvent', (req, res) => {
+  app.post('/api/sendEvent', (req, res) => {
     setTimeout(() => {
       res.json({ success: true });
     }, 50);

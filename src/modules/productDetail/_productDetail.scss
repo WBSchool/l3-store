@@ -41,6 +41,14 @@
     display: flex;
     align-items: center;
     gap: 10px;
+
+    & .btnFav {
+      cursor: pointer;
+      &:disabled {
+        cursor: auto;
+        background-color: black;
+      }
+    }
   }
 
   &__breadcrumbs {

@@ -1,5 +1,4 @@
 import localforage from 'localforage';
-import { selectedProducts } from 'src/modules/select/data';
 import { ProductData } from 'types';
 
 const DB = '__wb-select';
@@ -11,7 +10,12 @@ class SelectService {
 
   async addProduct(product: ProductData) {
     const products = await this.get();
-    await this.set([...products, product]);
+    const selected = await this.isInSelect(product)
+    if(!selected) {
+      await this.set([...products, product]);
+    } else {
+      await this.removeProduct(product)
+    }
   }
 
   async removeProduct(product: ProductData) {
@@ -33,13 +37,13 @@ class SelectService {
     this._updCounters();
   }
 
-  async isInCart(product: ProductData) {
+  async isInSelect(product: ProductData) {
     const products = await this.get();
     return products.some(({ id }) => id === product.id);
   }
 
   private async _updCounters() {
-    const products = selectedProducts;
+    const products = await this.get();
     const count = products.length >= 10 ? '9+' : products.length;
 
     //@ts-ignore

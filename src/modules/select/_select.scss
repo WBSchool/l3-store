@@ -1,35 +1,5 @@
 .select {
-  &__in {
-    display: flex;
-    gap: 40px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  &__cart {
-    flex-grow: 1;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  &__controls {
-    max-width: 320px;
-    background: var(--plate-color);
-    padding: 20px 20px 30px;
-    box-sizing: border-box;
-    border-radius: var(--border-radius);
-    position: sticky;
-    top: 18px;
-  }
-
-  &__price {
-    font-size: 2.5em;
-    margin-bottom: 0.3em;
-  }
-
+  
   &__empty {
     display: none;
   }
@@ -43,4 +13,12 @@
       display: none;
     }
   }
+  
+  .productList {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px 10px;
+  }
+  
 }
+

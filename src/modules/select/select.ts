@@ -1,29 +1,31 @@
 import { Component } from '../component';
-import { Product } from '../product/product';
 import html from './select.tpl.html';
-import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
-import { selectedProducts } from './data';
+import { selectService } from '../../services/select.service';
+import { ProductList } from '../productList/productList';
 
 class Select extends Component {
+  selectedProducts!: ProductList;
   products!: ProductData[];
 
+  constructor(props: any) {
+    super(props);
+  
+    this.selectedProducts = new ProductList();
+    this.selectedProducts.attach(this.view.cart);
+  }
+
   async render() {
-    this.products = selectedProducts;
+    this.products =  await selectService.get()
+
+    this.selectedProducts.update(this.products)
 
     if (this.products.length < 1) {
       this.view.root.classList.add('is__empty');
       return;
     }
 
-    this.products.forEach((product) => {
-      const productComp = new Product(product, { isHorizontal: true });
-      productComp.render();
-      productComp.attach(this.view.cart);
-    });
-
-    const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
-    this.view.price.innerText = formatPrice(totalPrice);
+    
 
   }
 
@@ -31,3 +33,9 @@ class Select extends Component {
 }
 
 export const selectComp = new Select(html);
+
+
+
+
+
+

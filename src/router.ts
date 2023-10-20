@@ -3,6 +3,7 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
+import { sendEvent } from './utils/analytics';
 
 const ROUTES = {
   '/': homepageComp,
@@ -27,6 +28,8 @@ export default class Router {
 
     // @ts-ignore
     const component = ROUTES[window.location.pathname] || notFoundComp;
+
+    sendEvent('route', { url: window.location.pathname });
 
     component.attach(this.$appRoot);
     component.render();

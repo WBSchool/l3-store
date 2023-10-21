@@ -6,6 +6,7 @@ const DB = '__wb-favorite';
 class FavoriteService {
   init() {
     this._updCounters();
+    this.updateFavoriteButton();
   }
 
   async addProduct(product: ProductData) {
@@ -21,6 +22,7 @@ class FavoriteService {
   async clear() {
     await localforage.removeItem(DB);
     this._updCounters();
+    this.updateFavoriteButton();
   }
 
   async get(): Promise<ProductData[]> {
@@ -30,6 +32,7 @@ class FavoriteService {
   async set(data: ProductData[]) {
     await localforage.setItem(DB, data);
     this._updCounters();
+    this.updateFavoriteButton();
   }
 
   async isInFavorite(product: ProductData) {
@@ -42,7 +45,15 @@ class FavoriteService {
     const count = products.length >= 10 ? '9+' : products.length;
 
     //@ts-ignore
-    document.querySelectorAll('.js__favorite-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
+    document.querySelectorAll('.js__favorites-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
+  }
+
+  async updateFavoriteButton() {
+    const favoriteButton = document.querySelector('.favorites');
+    const products = await this.get();
+    if (products.length >= 1) {
+      favoriteButton?.classList.remove('hidden');
+    }
   }
 }
 

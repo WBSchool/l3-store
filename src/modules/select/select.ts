@@ -5,31 +5,25 @@ import { selectService } from '../../services/select.service';
 import { ProductList } from '../productList/productList';
 
 class Select extends Component {
-  selectedProducts!: ProductList;
-  products!: ProductData[];
+  selectedProductsList!: ProductList;
+  selectedProducts!: ProductData[];
 
   constructor(props: any) {
     super(props);
   
-    this.selectedProducts = new ProductList();
-    this.selectedProducts.attach(this.view.cart);
+    this.selectedProductsList = new ProductList();
+    this.selectedProductsList.attach(this.view.cart);
   }
 
   async render() {
-    this.products =  await selectService.get()
+    this.selectedProducts =  await selectService.get()
+    this.selectedProductsList.update(this.selectedProducts)
 
-    this.selectedProducts.update(this.products)
-
-    if (this.products.length < 1) {
+    if (this.selectedProducts.length < 1) {
       this.view.root.classList.add('is__empty');
       return;
     }
-
-    
-
   }
-
-  
 }
 
 export const selectComp = new Select(html);

@@ -44,9 +44,9 @@
 
     & .btnFav {
       cursor: pointer;
-      &:disabled {
-        cursor: auto;
-        background-color: black;
+      fill: var(--key-color);
+      &.selected {
+        fill: black ;
       }
     }
   }

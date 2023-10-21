@@ -12,12 +12,12 @@ class ProductDetail extends Component {
 
   constructor(props: any) {
     super(props);
-
     this.more = new ProductList();
     this.more.attach(this.view.more);
   }
 
   async render() {
+
     const urlParams = new URLSearchParams(window.location.search);
     const productId = Number(urlParams.get('id'));
 
@@ -68,8 +68,7 @@ class ProductDetail extends Component {
   private _addToSelect() {
     if (!this.product) return;
 
-    selectService.addProduct(this.product);
-    console.log('added')
+    selectService.toggleProduct(this.product);
     this._setInSelect();
   }
 
@@ -79,8 +78,10 @@ class ProductDetail extends Component {
   }
 
   private _setInSelect() {
-    this.view.btnFav.disabled = true;
+    this.view.btnFav.classList.toggle('selected')
   }
+
+
 }
 
 export const productDetailComp = new ProductDetail(html);

@@ -1,12 +1,14 @@
 import { Component } from '../component';
 import { Product } from '../product/product';
 import html from './checkout.tpl.html';
-import { formatPrice } from '../../utils/helpers';
+import {formatPrice, genUUID} from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import {analyticsService} from "../../services/analytics.service";
 
 class Checkout extends Component {
   products!: ProductData[];
+  totalPrice: number = 0;
 
   async render() {
     this.products = await cartService.get();
@@ -22,18 +24,29 @@ class Checkout extends Component {
       productComp.attach(this.view.cart);
     });
 
-    const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
-    this.view.price.innerText = formatPrice(totalPrice);
+    this.totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
+    this.view.price.innerText = formatPrice(this.totalPrice);
 
     this.view.btnOrder.onclick = this._makeOrder.bind(this);
   }
 
   private async _makeOrder() {
     await cartService.clear();
+
+    const productIds = this.products.map(product => product.id);
+    const totalPrice = Math.floor(this.totalPrice / 1000);
+
     fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
+
+    analyticsService.sendAnalytics({
+      type: 'purchase',
+      payload: {orderId: genUUID(), totalPrice, productIds},
+      timestamp: Date.now()
+    });
+
     window.location.href = '/?isSuccessOrder';
   }
 }

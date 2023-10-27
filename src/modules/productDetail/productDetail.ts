@@ -32,14 +32,16 @@ class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
-    this.view.btnFavorite.onclick = this._addToFavorite.bind(this);
+    this.view.btnFavorite.onclick = this._toggleFavorite.bind(this);
 
     const isInCart = await cartService.isInCart(this.product);
     const isInFavorites = await favoritesService.isInFavorites(this.product);
 
     if (isInCart) this._setInCart();
     if (isInFavorites) this._setInFalorite()
-
+    if (await favoritesService.isInFavorites(this.product)) {
+      this._setInFalorite()
+    }
     fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
       .then((secretKey) => {
@@ -65,20 +67,23 @@ class ProductDetail extends Component {
     this.view.btnBuy.disabled = true;
   }
 
-  private _addToFavorite() {
+  private async _toggleFavorite() {
     if (!this.product) return;
-
-    favoritesService.addProduct(this.product);
-    this._setInFalorite();
-  }
-  private _setInFalorite() {
-    this.view.btnFavorite.innerText = '✓ В Избранном';
-    this.view.btnFavorite.disabled = true;
-
-    const svgIcon = this.view.btnFavorite.querySelector(".svg-icon");
-    if (svgIcon) {
-        svgIcon.classList.add('filled');
+    if (await favoritesService.isInFavorites(this.product)) {
+      favoritesService.removeProduct(this.product);
+      this._delInFalorite();
+    } else {
+      favoritesService.addProduct(this.product);
+      this._setInFalorite();
     }
+  }
+
+  private _setInFalorite() {
+    this.view.btnFavorite.innerHTML= '<svg class="svg-icon"><use xlink:href="#heart_filled"></use></svg>';
+  }
+
+  private _delInFalorite() {
+    this.view.btnFavorite.innerHTML= '<svg class="svg-icon"><use xlink:href="#heart"></use></svg>';
   }
 }
 

@@ -41,6 +41,28 @@
     display: flex;
     align-items: center;
     gap: 10px;
+
+    .btnFav {
+      cursor: pointer;
+
+      svg {
+        &:hover {
+          fill: var(--key-color);
+        }
+      }
+    }
+
+    .btnFav.active {
+      cursor: pointer;
+
+      svg {
+        fill: var(--key-color);
+
+        &:hover {
+          fill: black;
+        }
+      }
+    }
   }
 
   &__breadcrumbs {

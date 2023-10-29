@@ -124,6 +124,31 @@ img {
   position: relative;
 }
 
+.favorite {
+  position: relative;
+}
+
+.favoriteCounter {
+  position: absolute;
+  right: -21px;
+  top: -10px;
+  background: #ff5100;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  display: block;
+  width: 20px;
+  line-height: 20px;
+  text-align: center;
+  padding: 0;
+
+  &:empty {
+    display: none;
+  }
+} 
+
 .cartCounter {
   position: absolute;
   right: -21px;

@@ -38,15 +38,11 @@ class ProductDetail extends Component {
 
     if (isInCart) this._setInCart();
 
-    const secretKey = await fetch(`/api/getProductSecretKey?id=${id}`).then((res) => res.json());
-    this.view.secretKey.setAttribute('content', secretKey);
-
-    const isLogEmpty = Object.keys(this.product.log).length === 0;
-    analyticsService.sendAnalytics({
-      type: isLogEmpty ? 'viewCard' : 'viewCardPromo',
-      payload: {productData: this.product, secretKey},
-      timestamp: Date.now()
-    });
+    fetch(`/api/getProductSecretKey?id=${id}`)
+        .then((res) => res.json())
+        .then((secretKey) => {
+          this.view.secretKey.setAttribute('content', secretKey);
+        });
 
     fetch('/api/getPopularProducts')
       .then((res) => res.json())

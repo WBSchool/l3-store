@@ -57,3 +57,7 @@ export type ProductData = {
     src: string;
     description: string;
 }
+
+export interface HTMLWithProductData extends HTMLElement {
+    productData: ProductData
+}

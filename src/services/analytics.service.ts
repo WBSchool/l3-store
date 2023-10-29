@@ -1,4 +1,4 @@
-import { ProductData } from '../../types';
+import {HTMLWithProductData, ProductData} from '../../types';
 
 enum EventTypes {
     route = 'route',
@@ -22,19 +22,43 @@ interface Analytics {
 
 class AnalyticsService {
     url: string;
-
     constructor(url: string = '/api/sendEvent') {
         this.url = url;
-
     }
 
-    async sendAnalytics(body: Analytics) {
-        console.log('analytics:', body);
+    async handleIntersections(entries: IntersectionObserverEntry[]) {
+        for (const entry of entries) {
+            if (entry.isIntersecting) {
+                console.log('Intersected:', entry.target);
+                const {productData} = entry.target as HTMLWithProductData;
+
+                console.log(`Product ID: ${productData.id}. Getting secret key ...`);
+                const secretKey: string = await this.getSecretKey(productData.id);
+
+                const isLogEmpty: boolean = Object.keys(productData.log).length === 0;
+                const body: Analytics = {
+                    type: isLogEmpty ? 'viewCard' : 'viewCardPromo',
+                    payload: {productData, secretKey},
+                    timestamp: Date.now()
+                }
+
+                console.log(`Product ID: ${productData.id}. Sending analytics...`);
+                this.sendAnalytics(body);
+            }
+        }
+    }
+
+    async getSecretKey(id: number): Promise<string> {
+        return await fetch(`/api/getProductSecretKey?id=${id}`).then((res) => res.json());
+    }
+
+    async sendAnalytics(body: Analytics): Promise<void> {
+        console.log('analytics for send:', body);
 
         fetch(this.url, {
             method: 'POST',
             body: JSON.stringify(body)
-        }).then(response => response.json()).then(json => console.log('analytics:', json));
+        }).then(response => response.json()).then(json => console.log('analytics response:', json));
     }
 }
 

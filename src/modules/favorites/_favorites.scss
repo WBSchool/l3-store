@@ -1,0 +1,17 @@
+.favorites {
+    .delete_all {
+        background-color: rgb(255, 255, 255);
+        border: 1px solid black;
+        width: 15%;
+        height: 30px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 90%;
+        font-weight: 500;
+        transition: 0.3s;
+        &:hover {
+            color: white;
+            background-color: #a2097b;
+        }
+    }
+}

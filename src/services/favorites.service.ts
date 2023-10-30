@@ -1,18 +1,18 @@
 import localforage from 'localforage';
 import { ProductData } from 'types';
-import { eventHandler } from '../modules/api/sendEvent'
 
-const DB = '__wb-cart';
+const DB = '__wb-favorites';
 
-class CartService {
+
+class FavoritesService {
   init() {
     this._updCounters();
+    this._updVisible();
   }
 
   async addProduct(product: ProductData) {
     const products = await this.get();
     await this.set([...products, product]);
-    eventHandler.handleAddToCart(product);
   }
 
   async removeProduct(product: ProductData) {
@@ -23,6 +23,7 @@ class CartService {
   async clear() {
     await localforage.removeItem(DB);
     this._updCounters();
+    this._updVisible();
   }
 
   async get(): Promise<ProductData[]> {
@@ -31,10 +32,11 @@ class CartService {
 
   async set(data: ProductData[]) {
     await localforage.setItem(DB, data);
+    (document.querySelector('.favorites') as HTMLElement).style.display = 'inline';
     this._updCounters();
   }
 
-  async isInCart(product: ProductData) {
+  async isInFavorites(product: ProductData) {
     const products = await this.get();
     return products.some(({ id }) => id === product.id);
   }
@@ -44,8 +46,20 @@ class CartService {
     const count = products.length >= 10 ? '9+' : products.length;
 
     //@ts-ignore
-    document.querySelectorAll('.js__cart-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
+    document.querySelectorAll('.js__favorites-counter').forEach(($el: HTMLElement) => $el.innerText = String(count || ''));
+  }
+
+  private async _updVisible() {
+    const products = await this.get();
+    const count = products.length;
+
+    if (count < 1 ) {
+        (document.querySelector('.favorites') as HTMLElement).style.display = 'none';
+    } else {
+        (document.querySelector('.favorites') as HTMLElement).style.display = 'inline';
+    }
+
   }
 }
 
-export const cartService = new CartService();
+export const favoritesService = new FavoritesService();

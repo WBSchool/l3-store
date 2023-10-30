@@ -4,6 +4,7 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import { eventHandler } from '../api/sendEvent'
 
 class Checkout extends Component {
   products!: ProductData[];
@@ -34,6 +35,7 @@ class Checkout extends Component {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
+    eventHandler.handlePurchase('order666', 11200, [23, 34])
     window.location.href = '/?isSuccessOrder';
   }
 }

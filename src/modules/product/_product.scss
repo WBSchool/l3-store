@@ -44,6 +44,31 @@
       max-width: 180px;
       margin-bottom: 0;
       margin-right: 10px;
+      position: relative;
+      .deleteBtn {
+        position: relative;
+        display: none;
+        left: 4px;
+        top: 4px;
+        button {
+          width: 20px;
+          height: 20px;
+          border: none;
+          background-color: #e8e8f1;
+          border-radius: 16px;
+          text-align: center;
+          z-index: 10;
+        }
+        button:hover {
+          color: white;
+          background-color: #cb11ab;
+        }
+      }
+    }
+    .product__img:hover {
+      .deleteBtn {
+        display: flex;
+      }
     }
   }
 }

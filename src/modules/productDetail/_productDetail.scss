@@ -41,6 +41,13 @@
     display: flex;
     align-items: center;
     gap: 10px;
+
+     .btnFav {
+       --key-color: black;
+     }
+    .btnFav:hover {
+      --key-color: #cb11ab;;
+    }
   }
 
   &__breadcrumbs {
@@ -57,6 +64,8 @@
       }
     }
   }
+
+
 
   &__price {
     margin: 0.75em 0;

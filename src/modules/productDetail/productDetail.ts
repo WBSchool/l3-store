@@ -56,7 +56,6 @@ class ProductDetail extends Component {
     private _addToFavorites() {
         if (!this.product) return;
         favoritesService.addProduct(this.product);
-        alert('Товар добавлен в избранное')
     };
 
     private _addToCart() {

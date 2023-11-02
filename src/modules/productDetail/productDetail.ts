@@ -4,6 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
+import { favoriteService } from '../../services/favorite.service';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -32,8 +33,13 @@ class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
+    this.view.btnFav.onclick = this._actionOnFavorite.bind(this); //Привязал кнопке действие
 
     const isInCart = await cartService.isInCart(this.product);
+
+    const isInFav = await favoriteService.isInFavorites(this.product); //Узнал, есть ли продукт в фаворитах
+
+    if (isInFav) this._setInFav(); //Если есть, запустить функцию
 
     if (isInCart) this._setInCart();
 
@@ -55,6 +61,30 @@ class ProductDetail extends Component {
 
     cartService.addProduct(this.product);
     this._setInCart();
+  }
+
+  //Действие при нажатии на кнопку фаворита
+  private async _actionOnFavorite() {
+    if (!this.product) return;
+
+    const isInFav = await favoriteService.isInFavorites(this.product); //Проверка, есть ли он в фаворитах
+
+    //Если есть, удалю, если нету, добавлю, и изменю класс
+    if (isInFav) {
+      favoriteService.removeProductFromFavorites(this.product);
+      this.view.btnFav.classList.remove('isFav');
+
+    } else if (!isInFav) {
+      favoriteService.addProductToFavorites(this.product);
+      this.view.btnFav.classList.add('isFav');
+    }
+  }
+
+  //Если эта функция вызвалась, значит, продукт в фаворитах и включу кнопке обводку
+  private _setInFav() {
+    if (!this.product) return;
+
+    this.view.btnFav.classList.add('isFav');
   }
 
   private _setInCart() {

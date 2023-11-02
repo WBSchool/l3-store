@@ -41,6 +41,10 @@
     display: flex;
     align-items: center;
     gap: 10px;
+
+    .isFav {
+      fill: var(--key-color);
+    }
   }
 
   &__breadcrumbs {

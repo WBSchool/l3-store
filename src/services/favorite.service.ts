@@ -6,6 +6,7 @@ const favoritesDB = '__favorites';
 class FavoriteService {
     init() {
         this._updCountersFavorite();
+        this._updFavoriteBlock();
     }
 
     async addProductToFavorites(product: ProductData) {
@@ -21,6 +22,7 @@ class FavoriteService {
     async clearFavorites() {
         await localforage.removeItem(favoritesDB);
         this._updCountersFavorite();
+        this._updFavoriteBlock();
     }
 
     async getFavorites(): Promise<ProductData[]> {
@@ -30,6 +32,7 @@ class FavoriteService {
     async setFavorites(data: ProductData[]) {
         await localforage.setItem(favoritesDB, data);
         this._updCountersFavorite();
+        this._updFavoriteBlock();
     }
 
     async isInFavorites(product: ProductData) {
@@ -41,6 +44,14 @@ class FavoriteService {
         const products = await this.getFavorites();
         const count = products.length >= 10 ? '9+' : products.length;
 
+        //@ts-ignore
+        document.querySelectorAll('.js__favorite-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
+    }
+
+    private async _updFavoriteBlock() {
+        const products = await this.getFavorites();
+        const count = products.length;
+
         //Прячу или показываю ссылку на фаворит
         if (count === 0) {
             //@ts-ignore
@@ -50,9 +61,6 @@ class FavoriteService {
             //@ts-ignore
             document.querySelectorAll('.favorite').forEach(($el: HTMLElement) => ($el.classList.remove('hide')));
         }
-
-        //@ts-ignore
-        document.querySelectorAll('.js__favorite-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
     }
 }
 

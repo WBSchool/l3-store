@@ -1,3 +1,9 @@
+declare global {
+    interface Window {
+        userId: string;
+    }
+}
+
 export type ProductData = {
     brand: string;
     brandId: number;

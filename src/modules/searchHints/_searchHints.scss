@@ -1,0 +1,21 @@
+.searchHints__wrapper {
+    align-items: center;
+    display: flex;
+    gap: 5px;
+}
+
+.searchHint {
+    display: flex;
+    gap: 10px;
+    background-color: #F6F6FA;
+    padding: 4px 6px 8px 6px;
+    border-radius: 8px;
+}
+
+.hint__link {
+    text-decoration: none;
+    background-image: linear-gradient(92.97deg, #DA15B8 4.93%, #8D06CC 100%);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}

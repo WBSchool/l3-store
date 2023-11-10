@@ -57,3 +57,9 @@ export type ProductData = {
     src: string;
     description: string;
 }
+
+export type searchHint = {
+    productName: string,
+}
+
+export type searchHintsList = searchHint[];

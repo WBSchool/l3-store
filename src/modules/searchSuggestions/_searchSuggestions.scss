@@ -1,0 +1,116 @@
+$border: 3px;
+
+.search-suggestions {
+    font-family: 'ALS Hauss VF';
+    margin: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 16px;
+    margin-bottom: 40px;
+    box-sizing: border-box;
+    max-width: 900px;
+    gap: 16px;
+
+    &__line-wrapper {
+        width: 100%;
+    }
+
+    &__line {
+        display: flex;
+        max-height: 60px;
+        align-items: center;   
+
+        width: 100%;
+
+        position: relative;
+        box-sizing: border-box;
+
+        background-color: rgb(255, 255, 255);
+        background-clip: padding-box;
+        border: solid $border transparent;
+        border-radius: 2% / 32%;
+
+        &:before {
+            box-sizing: border-box;
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            margin: -$border; 
+            border-radius: inherit;
+            background: linear-gradient(102.42deg, #DA15B8 59.69%, #8D06CC 100%);
+        }
+
+        &--icon-subtract {
+            height: 31.4px;
+            width: 31.4px;
+        }
+
+        &--icon-menu {
+            height: 25px;
+            width: 28px;
+        }
+
+        &--input {
+            padding: 0;
+            border: 0;
+            outline: none;
+            font-family: 'ALS Hauss VF';
+            font-size: 30px;
+            font-weight: 550;
+            line-height: 32px;
+            letter-spacing: -0.01em;
+            flex-grow: 1;
+
+            &::placeholder {
+                font-family: 'ALS Hauss VF';
+                font-size: 30px;
+                font-weight: 550;
+                line-height: 32px;
+                letter-spacing: -0.01em;
+                color: #E6E1EF;
+            }
+        }
+
+        &--btn {
+            cursor: pointer;
+            height: 60px;
+            width: 60px;
+            padding-top: 3px;
+            background-color: rgba(255, 255, 255, 0);
+            border: 0;
+            border-radius: 10px;
+        }
+    }
+
+    &__hints {
+        width: 100%;
+        display: flex;
+        justify-content: left;
+        align-items: baseline;
+
+        font-size: 22px;
+        font-weight: 550;
+        line-height: 24px;
+        letter-spacing: 0px;
+        gap: 3px;
+
+        &--item{
+            background: #F6F6FA;
+            padding: 4px 6px 8px 6px;
+            border-radius: 8px;
+            cursor: pointer;
+
+            &--text {
+                background: linear-gradient(92.97deg, #DA15B8 4.93%, #8D06CC 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+    }
+
+
+}

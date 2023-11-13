@@ -120,7 +120,7 @@ img {
   }
 }
 
-.cart {
+.cart, .favorite-products {
   position: relative;
 }
 
@@ -173,4 +173,9 @@ img {
   &:not(:last-child) {
     margin-bottom: 30px;
   }
+}
+
+.header__buttons {
+  display: flex;
+  gap: 40px;
 }

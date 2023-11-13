@@ -1,0 +1,19 @@
+.favorite-products {
+  &__in {
+    display: flex;
+  }
+
+  &__empty {
+    display: none;
+  }
+
+  &.is__empty {
+    .favorite-products__empty {
+      display: block;
+    }
+
+    .favorite-products__in {
+      display: none;
+    }
+  }
+}

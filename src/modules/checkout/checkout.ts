@@ -1,9 +1,10 @@
 import { Component } from '../component';
 import { Product } from '../product/product';
 import html from './checkout.tpl.html';
-import { formatPrice } from '../../utils/helpers';
+import { formatPrice, genUUID } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import { eventAnalytics, typeEvent } from '../../services/event_analytics.service';
 
 class Checkout extends Component {
   products!: ProductData[];
@@ -34,7 +35,18 @@ class Checkout extends Component {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
-    window.location.href = '/?isSuccessOrder';
+    
+     // window.location.href = '/?isSuccessOrder';
+
+    const totalPriceStr = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
+    const totalPrice = Number.parseInt(formatPrice(totalPriceStr));
+    const productIds = this.products.map(product => product.id); 
+    const orderId: string = genUUID();
+    await eventAnalytics.sendEvent({
+      type: typeEvent.purchase,
+      payload: { orderId, totalPrice, productIds },
+      timestamp: Date.now(),
+    });
   }
 }
 

@@ -6,6 +6,8 @@ const DB = '__wb-cart';
 class CartService {
   init() {
     this._updCounters();
+    // localforage.removeItem(DB);
+    // localforage.removeItem('__wb-favorite-products');
   }
 
   async addProduct(product: ProductData) {

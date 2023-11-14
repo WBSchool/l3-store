@@ -3,6 +3,7 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
+import { statisticsService } from "./services/statistics.service";
 
 const ROUTES = {
   '/': homepageComp,
@@ -24,7 +25,8 @@ export default class Router {
 
   route(e: any) {
     e.preventDefault();
-
+    statisticsService.send("route", { url: window.location.pathname });
+    
     // @ts-ignore
     const component = ROUTES[window.location.pathname] || notFoundComp;
 

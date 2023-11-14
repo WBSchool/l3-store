@@ -4,9 +4,20 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import { statisticsService } from '../../services/statistics.service';
 
 class Checkout extends Component {
   products!: ProductData[];
+  productsIds: number[];
+  totalPrice: number;
+
+  constructor(props: any) {
+    super(props)
+    this.productsIds = [];
+    this.totalPrice = 0;
+
+  }
+   
 
   async render() {
     this.products = await cartService.get();
@@ -15,15 +26,16 @@ class Checkout extends Component {
       this.view.root.classList.add('is__empty');
       return;
     }
-
+    
     this.products.forEach((product) => {
+      this.productsIds.push(product.id);
       const productComp = new Product(product, { isHorizontal: true });
       productComp.render();
       productComp.attach(this.view.cart);
     });
 
-    const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
-    this.view.price.innerText = formatPrice(totalPrice);
+    this.totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
+    this.view.price.innerText = formatPrice(this.totalPrice);
 
     this.view.btnOrder.onclick = this._makeOrder.bind(this);
   }
@@ -33,7 +45,15 @@ class Checkout extends Component {
     fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
+    })
+    .then(res => console.log(res));
+
+    statisticsService.send("purchase", { 
+      orderId: "orderId",
+      totalPrice: this.totalPrice,
+      productIds: this.productsIds
     });
+    
     window.location.href = '/?isSuccessOrder';
   }
 }

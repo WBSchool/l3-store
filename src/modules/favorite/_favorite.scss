@@ -1,0 +1,9 @@
+.favorite {
+    &__empty {
+        display: none;
+    }
+
+    .is__empty {
+        display: block;
+    }
+}

@@ -4,7 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
-import { fetchWithUserId } from "../../utils/fetchUserId";
+import { fetchWithUserId } from '../../utils/fetchUserId';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -41,7 +41,6 @@ class ProductDetail extends Component {
     fetchWithUserId(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
       .then((secretKey) => {
-        debugger
         this.view.secretKey.setAttribute('content', secretKey);
       });
 

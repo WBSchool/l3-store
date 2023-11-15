@@ -12,7 +12,7 @@ class Search extends Component {
   }
   
   async render() {
-
+    this.hints.render();
   }
 }
   

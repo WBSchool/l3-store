@@ -2,7 +2,8 @@ class StatisticsService {
    async send(type: string, payload: any): Promise<void> {
     const body = {
         type,
-        payload
+        payload,
+        timestamp: new Date()
       }
       
     const result = fetch('/api/sendEvent', { body: JSON.stringify(body), method: "POST" })

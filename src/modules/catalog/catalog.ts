@@ -17,6 +17,11 @@ class Catalog extends Component {
     const productsResp = await fetch('/api/getProducts');
     const products = await productsResp.json();
     this.productList.update(products);
+    const array = products.map((element: { log: any; }) => {
+      return element.log;
+    });
+    console.log(products);
+    console.log(array);
   }
 }
 

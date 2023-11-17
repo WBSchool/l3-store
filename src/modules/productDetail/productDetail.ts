@@ -38,7 +38,18 @@ class ProductDetail extends Component {
 
     if (isInCart) this._setInCart();
 
-    const property = this.product.log === 'string' ? 'viewCardPromo' : 'viewCard';
+    const isEmpty = (object: { hasOwnProperty: (arg0: string) => any; }) => {
+      for (let prop in object) {
+        console.log(object, prop);
+        if (object.hasOwnProperty(prop)) return false;
+      }
+      return true;
+    }
+
+    const logIsEmpty = isEmpty(this.product.log);
+    console.log(logIsEmpty);
+
+    const property = !logIsEmpty ? 'viewCardPromo' : 'viewCard';
 
     fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())

@@ -13,6 +13,8 @@
 
   &__buttons {
     margin-left: auto;
+    display: flex;
+    gap:35px;
   }
 
   a {

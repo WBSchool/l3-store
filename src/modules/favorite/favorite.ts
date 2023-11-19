@@ -1,8 +1,8 @@
-import { Component } from "../component";
+import { Component } from '../component';
 import html from './favorite.tpl.html';
-import { favoriteService } from "../../services/favourite.service";
+import { favoriteService } from '../../services/favorite.service';
 
-import { ProductList } from "../productList/productList";
+import { ProductList } from '../productList/productList';
 
 class Favorite extends Component {
   productList: ProductList;
@@ -19,8 +19,6 @@ class Favorite extends Component {
       this.view.root.classList.add('is__empty');
       return;
     }
-  
-   
   }
 }
 export const favoriteComp = new Favorite(html);

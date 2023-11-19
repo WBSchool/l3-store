@@ -4,7 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
-import { favoriteService } from '../../services/favourite.service';
+import { favoriteService } from '../../services/favorite.service';
 
 class ProductDetail extends Component {
   more: ProductList;

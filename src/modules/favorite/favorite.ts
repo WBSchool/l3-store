@@ -6,7 +6,6 @@ import { ProductList } from "../productList/productList";
 
 class Favorite extends Component {
   productList: ProductList;
-  //products!: ProductData[];
   constructor(props: any) {
     super(props);
 

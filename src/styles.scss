@@ -122,11 +122,14 @@ img {
   }
 }
 
-.cart {
+.cart-link {
   position: relative;
 }
-.favorite {
+.favorite-link {
   position: relative;
+}
+.display-none{
+  display: none;
 }
 .counter {
   position: absolute;

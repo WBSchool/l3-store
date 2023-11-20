@@ -57,3 +57,16 @@ export type ProductData = {
     src: string;
     description: string;
 }
+
+export type statData = {
+  type: string,
+  payload: {
+    productDetails?: ProductData;
+    secretKey?: string;
+    url?: string;
+    orderId?: string;
+    totalPrice?: number;
+    productsIds?: number[];
+  },
+  timestamp: number,
+}

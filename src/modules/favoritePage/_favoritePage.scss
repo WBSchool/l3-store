@@ -1,0 +1,13 @@
+.favorite {
+  &__empty {
+    display: none;
+  }
+  &.is__empty {
+    .favorite__empty {
+      display: block;
+    }
+    .favorite__in {
+      display: none;
+    }
+  }
+}

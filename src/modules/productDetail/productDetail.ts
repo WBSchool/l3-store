@@ -1,10 +1,11 @@
-import { Component } from '../component';
-import { ProductList } from '../productList/productList';
-import { formatPrice } from '../../utils/helpers';
-import { ProductData } from 'types';
+import {Component} from '../component';
+import {ProductList} from '../productList/productList';
+import {formatPrice} from '../../utils/helpers';
+import {ProductData} from 'types';
 import html from './productDetail.tpl.html';
-import { cartService } from '../../services/cart.service';
+import {cartService} from '../../services/cart.service';
 import {favoriteService} from "../../services/favorite.service";
+import {analyticsService} from "../../services/analytics.service";
 
 
 class ProductDetail extends Component {
@@ -45,6 +46,14 @@ class ProductDetail extends Component {
       .then((res) => res.json())
       .then((secretKey) => {
         this.view.secretKey.setAttribute('content', secretKey);
+        const payload = {...this.product,secretKey}
+        //проверяем лог
+        const eventType = Object.keys(this.product?.log).length>0 ? 'viewCardPromo': 'viewCard'
+        try{
+          analyticsService.sendEvent(eventType,payload)
+        }catch (error){
+          console.error(error)
+        }
       });
 
     fetch('/api/getPopularProducts')
@@ -85,11 +94,17 @@ class ProductDetail extends Component {
     }
   }
 
-  private _addToCart() {
+  private async _addToCart() {
     if (!this.product) return;
+   const payload = this.product
 
-    cartService.addProduct(this.product);
+    try{
+    await cartService.addProduct(this.product);
     this._setInCart();
+    await analyticsService.sendEvent('addToCart',payload)
+      }catch (error){
+     console.error(error)
+    }
   }
 
   private _setInCart() {

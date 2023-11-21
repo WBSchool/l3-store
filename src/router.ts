@@ -3,6 +3,7 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
+import { analyticsService } from './services/analytics.service';
 
 const ROUTES = {
   '/': homepageComp,
@@ -24,11 +25,12 @@ export default class Router {
 
   route(e: any) {
     e.preventDefault();
-
+    const path = window.location.pathname;
     // @ts-ignore
-    const component = ROUTES[window.location.pathname] || notFoundComp;
+    const component = ROUTES[path] || notFoundComp;
 
     component.attach(this.$appRoot);
     component.render();
+    analyticsService.sendRouteUrl(path);
   }
 }

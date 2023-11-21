@@ -1,8 +1,9 @@
 import { Component } from '../component';
 import { Product } from '../product/product';
 import html from './checkout.tpl.html';
-import { formatPrice } from '../../utils/helpers';
+import { formatPrice, genUUID } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
+import { userService } from '../../services/user.service';
 import { ProductData } from 'types';
 
 class Checkout extends Component {
@@ -30,11 +31,23 @@ class Checkout extends Component {
 
   private async _makeOrder() {
     await cartService.clear();
+    this._sendingEventStatistics();
+
     fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
     window.location.href = '/?isSuccessOrder';
+  }
+
+  private async _sendingEventStatistics(): Promise<void> {
+    const payload = {
+      orderId: genUUID(),
+      productIds: this.products.map(({ id }) => id),
+      totalPrice: this.products.reduce((acc, product) => (acc += product.salePriceU), 0)
+    };
+
+    userService.sendingEventStatistics('purchase', payload);
   }
 }
 

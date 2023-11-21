@@ -1,6 +1,7 @@
 import { addElement } from '../../utils/helpers';
 import { Component } from '../component';
 import html from './homepage.tpl.html';
+import { getProdRequestSettings } from '../../utils/requestSettings';
 
 import { ProductList } from '../productList/productList';
 
@@ -14,8 +15,10 @@ class Homepage extends Component {
     this.popularProducts.attach(this.view.popular);
   }
 
-  render() {
-    fetch('/api/getPopularProducts')
+  async render() {
+    const requestSettings = await getProdRequestSettings();
+    
+    fetch('/api/getPopularProducts', requestSettings)
       .then((res) => res.json())
       .then((products) => {
         this.popularProducts.update(products);

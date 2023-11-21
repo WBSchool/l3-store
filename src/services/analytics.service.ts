@@ -7,12 +7,20 @@ class AnalyticsService {
     };
     this.sentEvent(eventData);
   }
-  async sendProductViewport(dataProduct: any) {
+  async sendProductViewport(dataProduct: any, secretKey: any) {
+    //console.log(secretKey,' - ',dataProduct);
+    let typeProduct: string;
+    if (Object.keys(dataProduct.log).length > 0) {
+      typeProduct = 'viewCardPromo';
+    } else {
+      typeProduct = 'viewCard';
+    }
     const eventData = {
-      type: 'viewCard',
-      payload: {dataProduct },
+      type: typeProduct,
+      payload: {secretKey, dataProduct },
       timestamp: Date.now()
-    };
+      };
+    console.log(eventData);
     this.sentEvent(eventData);
   }
 

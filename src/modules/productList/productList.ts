@@ -8,9 +8,11 @@ import { analyticsService } from '../../services/analytics.service';
 export class ProductList {
   view: View;
   products: ProductData[];
+  viewedProducts: Set<number>;
 
   constructor() {
     this.products = [];
+    this.viewedProducts = new Set();
     this.view = new ViewTemplate(html).cloneView();
   }
 
@@ -32,15 +34,23 @@ export class ProductList {
       window.addEventListener('scroll', () => this.handleProductView(productComp));
       productComp.render();
       productComp.attach(this.view.root);
+      this.handleProductView(productComp);
     });
   }
   handleProductView(productComp: Product) {
-    if (this.productInViewport(productComp.view.root)) {
-      console.log(productComp.getProps())
-      analyticsService.sendProductViewport(productComp.getProps());
+    if (!this.viewedProducts.has(productComp.getProps().id)) {
+      const productId = productComp.getProps().id;
+      if (this.productInViewport(productComp.view.root)) {
+        fetch(`/api/getProductSecretKey?id=${productId}`)
+          .then((res) => res.json())
+          .then((secretKey) => {
+            analyticsService.sendProductViewport(productComp.getProps(), secretKey);
+          });
+        this.viewedProducts.add(productId);
+      }
     }
   }
-  productInViewport(elem:any) {
+  productInViewport(elem: any) {
     let box = elem.getBoundingClientRect();
     let top = box.top;
     let left = box.left;

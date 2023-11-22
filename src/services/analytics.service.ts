@@ -22,10 +22,20 @@ class AnalyticsService {
     this.sentEvent(eventData);
   }
 
-  async sendAddToCart(dataProduct: any) {    
+  async sendAddToCart(dataProduct: any) {
     const eventData = {
       type: 'addToCard',
-      payload: dataProduct ,
+      payload: dataProduct,
+      timestamp: Date.now()
+    };
+    this.sentEvent(eventData);
+  }
+
+  async sendMakeOrder(data: any) {
+    console.log(data);
+    const eventData = {
+      type: 'purchase',
+      payload: data,
       timestamp: Date.now()
     };
     this.sentEvent(eventData);

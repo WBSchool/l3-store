@@ -8,7 +8,6 @@ class AnalyticsService {
     this.sentEvent(eventData);
   }
   async sendProductViewport(dataProduct: any, secretKey: any) {
-    //console.log(secretKey,' - ',dataProduct);
     let typeProduct: string;
     if (Object.keys(dataProduct.log).length > 0) {
       typeProduct = 'viewCardPromo';
@@ -17,10 +16,18 @@ class AnalyticsService {
     }
     const eventData = {
       type: typeProduct,
-      payload: {secretKey, dataProduct },
+      payload: { secretKey, dataProduct },
       timestamp: Date.now()
-      };
-    console.log(eventData);
+    };
+    this.sentEvent(eventData);
+  }
+
+  async sendAddToCart(dataProduct: any) {    
+    const eventData = {
+      type: 'addToCard',
+      payload: dataProduct ,
+      timestamp: Date.now()
+    };
     this.sentEvent(eventData);
   }
 
@@ -31,7 +38,7 @@ class AnalyticsService {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(eventData)
-    })
+    });
   }
 }
 export const analyticsService = new AnalyticsService();

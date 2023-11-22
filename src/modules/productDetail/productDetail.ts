@@ -45,7 +45,7 @@ class ProductDetail extends Component {
 
     fetch('/api/getPopularProducts', {
         headers: {
-          'x-userid': window.userId
+          'UserID': window.userId
         }
       })
       .then((res) => res.json())

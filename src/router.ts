@@ -22,9 +22,10 @@ export default class Router {
     window.addEventListener('hashchange', this.route.bind(this));
   }
 
-  route(e: any) {
-    e.preventDefault();
-
+  route(e?: any) {
+    if (e) {
+      e.preventDefault();
+    }
     // @ts-ignore
     const component = ROUTES[window.location.pathname] || notFoundComp;
 

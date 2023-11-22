@@ -2,6 +2,11 @@ import localforage from 'localforage';
 import { genUUID } from '../utils/helpers';
 
 const ID_DB = '__wb-userId';
+declare global {
+  interface Window {
+    userId: string;
+  }
+}
 
 class UserService {
   async init() {

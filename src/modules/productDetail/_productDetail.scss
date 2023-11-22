@@ -50,12 +50,10 @@
     }
   }
 
-  .svg-icon {
-    display: none;
-  }
-
   .svg-icon-filled {
-    display: none;
+    fill: #CB11AB !important;
+    height: 30px;
+    margin-top: 5px;
   }
 
   .active {

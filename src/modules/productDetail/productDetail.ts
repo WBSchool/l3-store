@@ -65,26 +65,13 @@ class ProductDetail extends Component {
       console.error('error', e);
     }
   }
-  private async _isFavorite() {
-    try {
-      const favorites = await favoriteService.getProducts();
+   private async _isFavorite() {
+    const favorites = await favoriteService.getProducts();
 
-      if (this.product !== undefined) {
-        const isFavorite = favorites.some((item) => item.brandId === this.product!.brandId);
+    const isFavorite = favorites.some((item) => item.id === this.product!.id);
 
-        if (isFavorite) {
-          this.view.favSvg?.classList.add('active');
-          this.view.noFavSvg?.classList.remove('active');
-        } else {
-          this.view.noFavSvg?.classList.add('active');
-          this.view.favSvg?.classList.remove('active');
-        }
-      }
-    } catch (e) {
-      console.error('error', e);
-    }
+   this.view.noFavSvg.classList.toggle('svg-icon-filled', isFavorite);
   }
-
   private _addToCart() {
     if (!this.product) return;
 

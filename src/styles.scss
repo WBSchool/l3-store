@@ -89,11 +89,19 @@ img {
   background: none;
   padding: 0;
   margin: 0;
+  cursor: pointer;
 
   svg {
     width: 32px;
     height: 32px;
     margin-top: 4px;
+  }
+
+  &.is__active {
+    svg {
+      fill: var(--key-color);
+      stroke: var(--key-color);
+    }
   }
 }
 
@@ -120,7 +128,8 @@ img {
   }
 }
 
-.cart {
+.cart,
+.fav {
   position: relative;
 }
 

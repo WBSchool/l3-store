@@ -1,0 +1,22 @@
+.favorite {
+    &__cart {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 20px 10px;
+    }
+
+    &__empty {
+      display: none;
+    }
+  
+    &.is__empty {
+      .favorite__empty {
+        display: block;
+      }
+  
+      .favorite__in {
+        display: none;
+      }
+    }
+  }
+  

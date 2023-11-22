@@ -1,0 +1,19 @@
+.search-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 8px;
+  background: var(--system-smoky, #F6F6FA);
+
+  &__text {
+    padding: 4px 6px 8px 6px;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: 24px;
+    background: linear-gradient(93deg, #DA15B8 4.93%, #8D06CC 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

@@ -1,0 +1,20 @@
+.search-hints {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &__frame-text {
+    padding: 4px 0 8px 0;
+    font-size: 22px;
+    font-weight: 550;
+    line-height: 24px;
+    font-style: normal;
+  }
+
+  &__hint-wrap {
+    display: flex;
+    gap: 3px;
+  }
+
+}

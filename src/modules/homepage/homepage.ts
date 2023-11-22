@@ -1,20 +1,35 @@
 import { addElement } from '../../utils/helpers';
 import { Component } from '../component';
 import html from './homepage.tpl.html';
+import { fetchHints } from '../../utils/hintsTestFetch';
+import { SearchHints } from '../searchHints/searchHintsBlock';
 
 import { ProductList } from '../productList/productList';
 
 class Homepage extends Component {
   popularProducts: ProductList;
+  searchHints: SearchHints;
 
   constructor(props: any) {
     super(props);
 
     this.popularProducts = new ProductList();
     this.popularProducts.attach(this.view.popular);
+
+    this.searchHints = new SearchHints();
+    this.searchHints.attach(this.view.hints);
   }
 
   render() {
+
+    fetchHints()
+      .then((data: string[]) => {
+        this.searchHints.update(data);
+      })
+      .catch(() => {
+        this.searchHints.update(['reserveName', 'reserveName', 'reserveName']);
+      })
+
     fetch('/api/getPopularProducts')
       .then((res) => res.json())
       .then((products) => {

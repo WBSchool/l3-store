@@ -25,7 +25,7 @@ export default class Router {
     window.addEventListener('load', this.route.bind(this));
     window.addEventListener('hashchange', this.route.bind(this));
   }
-  async route(e: any) {
+ async route(e: any) {
     e.preventDefault();
 
     // @ts-ignore
@@ -35,7 +35,7 @@ export default class Router {
     const payload = { url: path };
 
     try {
-      await analyticsService.sendEvent('route', payload);
+     await analyticsService.sendEvent('route', payload);
     } catch (error) {
       console.error(error);
     }

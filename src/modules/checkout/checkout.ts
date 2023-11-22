@@ -13,9 +13,6 @@ totalPrice:number
     super(props);
     this.totalPrice = 0
   }
-
-
-
   async render() {
     this.products = await cartService.get();
 
@@ -38,30 +35,29 @@ totalPrice:number
   }
 
   private async _makeOrder() {
-
-let productIds = this.products.map(item=>item.id)
+    let productIds = this.products.map(item => item.id);
 
     const payload = {
-  orderId: genUUID(),
-      totalPrice:this.totalPrice,
-      productIds
-    }
-    try{
-  await cartService.clear();
-  await fetch('/api/makeOrder', {
-      method: 'POST',
-      body: JSON.stringify(this.products)
-    });
-  await analyticsService.sendEvent('purchase',payload)
-      }catch (error){
-  console.error(error)
-    }
-    // чтобы перенаправление работало в любом случае
-    finally {
-      window.location.href = '/?isSuccessOrder';
-    }
+      orderId: genUUID(),
+      totalPrice: this.totalPrice,
+      productIds,
+    };
 
+    cartService.clear()
+        .then(() => {
+          return fetch('/api/makeOrder', {
+            method: 'POST',
+            body: JSON.stringify(this.products),
+          });
+        })
+        .then(() => analyticsService.sendEvent('purchase', payload))
+        .then(() => {
+          window.location.href = '/?isSuccessOrder';
+        })
+        .catch((error) => {
+          console.error(error);
+          window.location.href = '/?isErrorOrder';
+        });
   }
-
 }
 export const checkoutComp = new Checkout(html);

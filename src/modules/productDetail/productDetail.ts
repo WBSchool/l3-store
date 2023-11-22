@@ -30,6 +30,7 @@ class ProductDetail extends Component {
 
     const { id, src, name, description, salePriceU } = this.product;
 
+
     this.view.photo.setAttribute('src', src);
     this.view.title.innerText = name;
     this.view.description.innerText = description;
@@ -41,11 +42,17 @@ class ProductDetail extends Component {
     const isInCart = await cartService.isInCart(this.product);
 
     if (isInCart) this._setInCart();
-
     fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
       .then((secretKey) => {
         this.view.secretKey.setAttribute('content', secretKey);
+
+      });
+
+    fetch('/api/getPopularProducts')
+      .then((res) => res.json())
+      .then((products) => {
+        this.more.update(products);
         const payload = {...this.product,secretKey}
         //проверяем лог
         const eventType = Object.keys(this.product?.log).length>0 ? 'viewCardPromo': 'viewCard'
@@ -54,15 +61,9 @@ class ProductDetail extends Component {
         }catch (error){
           console.error(error)
         }
-      });
 
-    fetch('/api/getPopularProducts')
-      .then((res) => res.json())
-      .then((products) => {
-        this.more.update(products);
       });
   }
-
 
   private async _toggleFavorites() {
     if (!this.product) return;
@@ -94,18 +95,20 @@ class ProductDetail extends Component {
     }
   }
 
-  private async _addToCart() {
+  private _addToCart() {
     if (!this.product) return;
-   const payload = this.product
+    const payload = this.product;
 
-    try{
-    await cartService.addProduct(this.product);
-    this._setInCart();
-    await analyticsService.sendEvent('addToCart',payload)
-      }catch (error){
-     console.error(error)
-    }
+    cartService.addProduct(this.product)
+        .then(() => {
+          this._setInCart();
+          return analyticsService.sendEvent('addToCart', payload);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
   }
+
 
   private _setInCart() {
     this.view.btnBuy.innerText = '✓ В корзине';

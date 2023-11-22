@@ -1,5 +1,6 @@
 import { Component } from '../component';
 import html from './catalog.tpl.html';
+import { getProdRequestSettings } from '../../utils/requestSettings';
 
 import { ProductList } from '../productList/productList';
 
@@ -14,7 +15,9 @@ class Catalog extends Component {
   }
 
   async render() {
-    const productsResp = await fetch('/api/getProducts');
+    const requestSettings = await getProdRequestSettings();
+    
+    const productsResp = await fetch('/api/getProducts', requestSettings);
     const products = await productsResp.json();
     this.productList.update(products);
   }

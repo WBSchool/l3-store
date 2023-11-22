@@ -38,7 +38,7 @@ export class Product {
   }
 
   private _viewportCallback (entries: any, observer: IntersectionObserver) {
-    entries.forEach((entry:any) => {
+    entries.forEach((entry: IntersectionObserverEntry) => {
       if (entry.isIntersecting) {
         const timestamp = Date.now();
         fetch(`/api/getProductSecretKey?id=${this.product.id}`)

@@ -11,6 +11,7 @@ import {analyticsService} from "../../services/analytics.service";
 class ProductDetail extends Component {
   more: ProductList;
   product?: ProductData;
+  secretKey?: string;
 
   constructor(props: any) {
     super(props);
@@ -42,18 +43,19 @@ class ProductDetail extends Component {
     const isInCart = await cartService.isInCart(this.product);
 
     if (isInCart) this._setInCart();
-    fetch(`/api/getProductSecretKey?id=${id}`)
+   await fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
       .then((secretKey) => {
         this.view.secretKey.setAttribute('content', secretKey);
-
+        this.secretKey = secretKey
+        console.log('secretKey', secretKey)
       });
 
     fetch('/api/getPopularProducts')
       .then((res) => res.json())
-      .then((products) => {
+        .then((products) => {
         this.more.update(products);
-        const payload = {...this.product,secretKey}
+        const payload = {...this.product, secretKey: this.secretKey}
         //проверяем лог
         const eventType = Object.keys(this.product?.log).length>0 ? 'viewCardPromo': 'viewCard'
         try{

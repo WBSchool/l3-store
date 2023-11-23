@@ -3,6 +3,8 @@ import { Component } from '../component';
 import html from './homepage.tpl.html';
 
 import { ProductList } from '../productList/productList';
+import { ID_DB } from '../../services/user.service';
+import localforage from 'localforage';
 
 class Homepage extends Component {
   popularProducts: ProductList;
@@ -14,12 +16,14 @@ class Homepage extends Component {
     this.popularProducts.attach(this.view.popular);
   }
 
-  render() {
+  async render() {
+    const userId = await localforage.getItem(ID_DB) as string || '';
+
     fetch('/api/getPopularProducts', {
-        headers: {
-          'x-userid': window.userId,
-        }
-  })
+      headers: {
+        'x-userid': userId,
+      }
+    })
       .then((res) => res.json())
       .then((products) => {
         this.popularProducts.update(products);

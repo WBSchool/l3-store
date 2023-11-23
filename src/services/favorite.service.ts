@@ -35,7 +35,6 @@ class FavoriteService {
   private async _updCounters() {
     const products = await this.get();
     const count = products.length >= 10 ? '9+' : products.length;
-    console.log(products.length);
 
     //@ts-ignore
     document.querySelectorAll('.js__fav-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));

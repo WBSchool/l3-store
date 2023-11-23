@@ -5,6 +5,7 @@ import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 import { favoriteService } from '../../services/favorite.service';
+import { statisticsService } from '../../services/statistics';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -26,7 +27,6 @@ class ProductDetail extends Component {
 
     if (!this.product) return;
 
-
     const { id, src, name, description, salePriceU } = this.product;
 
     this.view.photo.setAttribute('src', src);
@@ -36,13 +36,12 @@ class ProductDetail extends Component {
     this.view.btnBuy.onclick = this._addToCart.bind(this);
     this.view.btnFav.onclick = this._addFavCart.bind(this);
 
-
     const isInFav = await favoriteService.isInFav(this.product);
-    
-    if(isInFav){
+
+    if (isInFav) {
       this.view.btnFav.classList.toggle('is__active');
     }
-    
+
     const isInCart = await cartService.isInCart(this.product);
 
     if (isInCart) this._setInCart();
@@ -50,6 +49,10 @@ class ProductDetail extends Component {
     fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
       .then((secretKey) => {
+        if (this.product) {
+          statisticsService.viewCardEvent(this.product, secretKey);
+        }
+
         this.view.secretKey.setAttribute('content', secretKey);
       });
 
@@ -64,13 +67,16 @@ class ProductDetail extends Component {
     if (!this.product) return;
 
     cartService.addProduct(this.product);
+    if (this.product) {
+      statisticsService.addtoCardEvent(this.product);
+    }
     this._setInCart();
   }
 
   private async _addFavCart() {
     if (!this.product) return;
 
-    if(await favoriteService.isInFav(this.product)){
+    if (await favoriteService.isInFav(this.product)) {
       favoriteService.removeProduct(this.product);
       this.view.btnFav.classList.remove('is__active');
     } else {

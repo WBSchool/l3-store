@@ -6,7 +6,6 @@ export const ID_DB = '__wb-userId';
 class UserService {
   async init() {
     const id = await this.getId();
-    localStorage.setItem(ID_DB, id);
     console.warn('UserID: ', id);
   }
 

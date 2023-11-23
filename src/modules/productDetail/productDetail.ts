@@ -6,7 +6,7 @@ import html from './productDetail.tpl.html';
 import {cartService} from '../../services/cart.service';
 import {favoriteService} from "../../services/favorite.service";
 import {analyticsService} from "../../services/analytics.service";
-import {userService} from "../../services/user.service";
+import {sharedState} from "../../services/user.service";
 
 
 class ProductDetail extends Component {
@@ -23,14 +23,12 @@ class ProductDetail extends Component {
   async render() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = Number(urlParams.get('id'));
-    const userId = await userService.getId()
     const productResp = await fetch(`/api/getProduct?id=${productId}`,{
       headers:{
-        UserID:'userId'
+        UserID:sharedState.userId
       }
     });
     this.product = await productResp.json();
-
     if (!this.product) return;
 
     const { id, src, name, description, salePriceU } = this.product;
@@ -65,7 +63,7 @@ class ProductDetail extends Component {
     fetch('/api/getPopularProducts',
     {
         headers: {
-          'UserID': userId
+          'UserID': sharedState.userId
         }
     })
       .then((res) => res.json())

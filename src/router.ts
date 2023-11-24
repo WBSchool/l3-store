@@ -11,7 +11,7 @@ const ROUTES = {
   '/catalog': catalogComp,
   '/product': productDetailComp,
   '/checkout': checkoutComp,
-  '/favorite': favoriteComp,
+  '/favorite': favoriteComp
 };
 
 export default class Router {
@@ -26,7 +26,9 @@ export default class Router {
   }
 
   route(e: any) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
 
     // @ts-ignore
     const component = ROUTES[window.location.pathname] || notFoundComp;

@@ -6,7 +6,7 @@ import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 import { favoriteService } from '../../services/favorite.service';
 import { statisticsService } from '../../services/statistics';
-import { userService } from 'src/services/user.service';
+import { userService } from '../../services/user.service';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -56,10 +56,10 @@ class ProductDetail extends Component {
 
         this.view.secretKey.setAttribute('content', secretKey);
       });
-
+      const userId = await userService.getId();
       fetch('/api/getPopularProducts', {
         headers: {
-          'x-userid': await userService.getId(),
+          'x-userid': userId,
         }
       })
       .then((res) => res.json())

@@ -36,7 +36,6 @@ class Checkout extends Component {
       body: JSON.stringify(this.products)
     });
     await statisticsService.PurchaseEvent(this.products);
-    // window.location.href = '/?isSuccessOrder';
   }
 }
 

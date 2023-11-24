@@ -3,7 +3,7 @@ import { Component } from '../component';
 import html from './homepage.tpl.html';
 
 import { ProductList } from '../productList/productList';
-import { userService } from 'src/services/user.service';
+import { userService } from '../../services/user.service';
 
 class Homepage extends Component {
   popularProducts: ProductList;
@@ -16,9 +16,10 @@ class Homepage extends Component {
   }
 
   async render() {
+    const userId = await userService.getId();
     fetch('/api/getPopularProducts', {
        headers: {
-         'x-userid': await userService.getId(),
+         'x-userid': userId,
        }
  })
       .then((res) => res.json())

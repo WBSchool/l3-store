@@ -1,0 +1,18 @@
+.suggestions-list{
+   font-size:22px;
+   font-weight: 550;
+height: 50px;
+&__item{
+    background: var(--system-smoky, #F6F6FA);
+   padding: 4px 6px 8px 6px;
+   border-radius: 8px;
+   cursor: pointer;
+   span{
+    background-image: linear-gradient(93deg, #DA15B8 4.93%, #8D06CC 100%);
+   -webkit-background-clip: text;
+   background-clip: text;
+   color: transparent;
+   }
+  
+}
+}

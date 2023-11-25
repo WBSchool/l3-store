@@ -3,6 +3,9 @@ import { Component } from '../component';
 import html from './homepage.tpl.html';
 
 import { ProductList } from '../productList/productList';
+import { SearchTags } from '../searchTags/searchTags';
+
+const MOCK_TAGS = ['чехол iphone 13 pro', 'яндекс станция 2', 'коляски agex'];
 
 class Homepage extends Component {
   popularProducts: ProductList;
@@ -29,6 +32,14 @@ class Homepage extends Component {
           'Заказ оформлен. Деньги спишутся с вашей карты, менеджер может позвонить, чтобы уточнить детали доставки'
       });
     }
+
+    this.createSearchTags();
+  }
+
+  createSearchTags() {
+    const tagsComp = new SearchTags(MOCK_TAGS);
+    tagsComp.render();
+    tagsComp.attach(this.view.searchTags);
   }
 }
 

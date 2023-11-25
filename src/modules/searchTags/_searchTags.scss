@@ -1,0 +1,22 @@
+.tags {
+  font-size: 22px;
+  font-weight: 550;
+  line-height: 24px;
+
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+}
+
+.tag {
+  background-color: #f6f6fa;
+  border-radius: 8px;
+  padding: 4px 6px 6px 6px;
+
+  &__text {
+    background: linear-gradient(to right, rgba(218, 21, 184, 1), rgba(141, 6, 204, 1));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

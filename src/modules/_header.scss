@@ -13,6 +13,10 @@
 
   &__buttons {
     margin-left: auto;
+
+    a:first-child{
+      margin-right: 30px;
+    }
   }
 
   a {

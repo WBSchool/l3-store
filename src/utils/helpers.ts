@@ -1,3 +1,7 @@
+// import { ProductData, SuggesionData } from "types";
+
+import { SuggesionData } from "types";
+
 export const genUUID = () => {
     let d = new Date().getTime();
     if (window.performance && typeof window.performance.now === 'function') {
@@ -27,3 +31,22 @@ export const formatPrice = (price: number) => {
       .replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽'
   );
 };
+
+export const getSuggestions = async () => {
+  const data:SuggesionData[] = [
+    {
+      name: 'чехол iphone 13 pro',
+      href: '/product?id="какой-то id"'
+    },
+    {
+      name: 'коляски agex',
+      href: '/product?id="какой-то id"'
+    },
+    {
+      name: 'яндекс станция 2',
+      href: '/product?id="какой-то id"'
+    }
+  ]
+
+  return data
+}

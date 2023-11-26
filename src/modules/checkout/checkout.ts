@@ -1,8 +1,9 @@
 import { Component } from '../component';
 import { Product } from '../product/product';
 import html from './checkout.tpl.html';
-import { formatPrice } from '../../utils/helpers';
+import { formatPrice, genUUID } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
+import { eventService } from '../../services/event.service';
 import { ProductData } from 'types';
 
 class Checkout extends Component {
@@ -29,6 +30,14 @@ class Checkout extends Component {
   }
 
   private async _makeOrder() {
+    const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
+    const productIds = this.products.map((el) => el.id)
+    const orderId = genUUID()
+    await eventService.sendEvent('purchase', {
+      orderId,
+      totalPrice,
+      productIds
+    })
     await cartService.clear();
     fetch('/api/makeOrder', {
       method: 'POST',

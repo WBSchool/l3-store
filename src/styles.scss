@@ -120,11 +120,11 @@ img {
   }
 }
 
-.cart {
+.cart, .fav {
   position: relative;
 }
 
-.cartCounter {
+.cartCounter, .favCounter {
   position: absolute;
   right: -21px;
   top: -10px;

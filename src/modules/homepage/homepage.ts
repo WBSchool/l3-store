@@ -1,25 +1,33 @@
-import { addElement } from '../../utils/helpers';
+import { addElement, getSuggestions } from '../../utils/helpers';
 import { Component } from '../component';
 import html from './homepage.tpl.html';
 
 import { ProductList } from '../productList/productList';
+import { SearchSuggesionBlock } from '../searchSuggestionBlock/searchSuggesionBlock';
 
 class Homepage extends Component {
   popularProducts: ProductList;
+  suggestions: SearchSuggesionBlock
 
   constructor(props: any) {
     super(props);
 
     this.popularProducts = new ProductList();
     this.popularProducts.attach(this.view.popular);
+
+    this.suggestions = new SearchSuggesionBlock();
+    this.suggestions.attach(this.view.suggestions)
   }
 
-  render() {
+  async render() {
     fetch('/api/getPopularProducts')
       .then((res) => res.json())
       .then((products) => {
         this.popularProducts.update(products);
       });
+
+    const suggestions = await getSuggestions()  
+    this.suggestions.update(suggestions)
 
     const isSuccessOrder = new URLSearchParams(window.location.search).get('isSuccessOrder');
     if (isSuccessOrder != null) {

@@ -1,0 +1,25 @@
+.searchSuggestion{
+   display: inline-block;
+   box-sizing: border-box;
+   border-radius: 8px;
+   padding: 4px 6px 8px;
+   background-color: #F6F6FA;
+   text-decoration: none;
+   max-width: 215px;
+   margin-left: 10px;
+
+   &:nth-child(2){
+      margin-right: 10px;
+   }
+
+   &__text{
+      color: black;
+      background: linear-gradient(92.97deg, #DA15B8 4.93%, #8D06CC 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+      // overflow: hidden;
+      // text-overflow: ellipsis;
+   }
+}

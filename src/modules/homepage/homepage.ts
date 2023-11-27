@@ -3,6 +3,7 @@ import { Component } from '../component';
 import html from './homepage.tpl.html';
 
 import { ProductList } from '../productList/productList';
+import {sharedState} from "../../services/user.service";
 
 class Homepage extends Component {
   popularProducts: ProductList;
@@ -14,9 +15,13 @@ class Homepage extends Component {
     this.popularProducts.attach(this.view.popular);
   }
 
-  render() {
-    fetch('/api/getPopularProducts')
-      .then((res) => res.json())
+  async render() {
+    fetch('/api/getPopularProducts',
+        {
+          headers:{
+            'UserID':sharedState.userId,
+          }
+          }).then((res) => res.json())
       .then((products) => {
         this.popularProducts.update(products);
       });

@@ -43,6 +43,25 @@
     gap: 10px;
   }
 
+  .btnFav {
+    display: block;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .svg-icon {
+    display: none;
+  }
+
+  .svg-icon-filled {
+    display: none;
+  }
+
+  .active {
+    display: block;
+  }
+
   &__breadcrumbs {
     color: var(--text-light-color);
     display: flex;

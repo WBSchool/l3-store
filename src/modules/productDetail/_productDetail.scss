@@ -43,6 +43,23 @@
     gap: 10px;
   }
 
+  .btnFav {
+    display: block;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .svg-icon-filled {
+    fill: #CB11AB !important;
+    height: 30px;
+    margin-top: 5px;
+  }
+
+  .active {
+    display: block;
+  }
+
   &__breadcrumbs {
     color: var(--text-light-color);
     display: flex;

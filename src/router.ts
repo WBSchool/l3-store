@@ -5,6 +5,7 @@ import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
 import { favoritesComp } from "./modules/favorites/favorites";
 import {analyticsService} from "./services/analytics.service";
+import {searchTipsComp} from "./modules/searchTips/searchTips";
 
 
 const ROUTES = {
@@ -12,7 +13,8 @@ const ROUTES = {
   '/catalog': catalogComp,
   '/product': productDetailComp,
   '/checkout': checkoutComp,
-  '/favorites': favoritesComp
+  '/favorites': favoritesComp,
+    '/search': searchTipsComp
 };
 
 export default class Router {

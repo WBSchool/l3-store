@@ -1,0 +1,83 @@
+.searchTips {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-weight: 550;
+  font-size: 22px;
+  line-height: 24px;
+  font-family: "Calibri", sans-serif;}
+
+.inpContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 900px;
+height: auto;
+  box-sizing: border-box; /* Учитывать padding внутри ширины */
+  border: 3px solid #cb11ab;
+  border-radius: 25px;
+margin-bottom: 20px;
+}
+
+.svgFirstContainer,.svgSecondContainer{
+  width: 60px;
+  display: flex;
+
+}
+
+.svgFirstContainer svg{
+ height: 31.4px;
+  width: 31.4px;
+  margin: auto;
+}
+.svgSecondContainer svg{
+  height: 25px;
+  width: 28px;
+  margin: auto;
+}
+.inpContainer svg use{
+  height: 31.4px;
+  width: 31.4px;
+}
+#productSearch{
+  width: 780px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  border: none;
+  outline: none;
+  font-family: ALS Hauss VF, sans-serif;
+  font-size: 30px;
+  font-weight: 550;
+  line-height: 32px;
+  letter-spacing: -0.01em;
+}
+input::placeholder{
+  font-family: ALS Hauss VF, sans-serif;
+  font-size: 30px;
+  font-weight: 550;
+  line-height: 32px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: #E6E1EF;
+
+
+}
+
+
+   .tipWrapper {
+      background: rgba(246, 246, 250, 1);
+    }
+
+    .tip {
+      color: transparent;
+      background: linear-gradient(92.97deg, #DA15B8 4.93%, #8D06CC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: lowercase;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+

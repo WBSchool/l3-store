@@ -18,8 +18,8 @@ export default class Router {
     // @ts-ignore
     this.$appRoot = document.querySelector('.js__root');
 
-    window.addEventListener('load', this.route.bind(this));
-    window.addEventListener('hashchange', this.route.bind(this));
+    // window.addEventListener('load', this.route.bind(this));
+    // window.addEventListener('hashchange', this.route.bind(this));
   }
 
   route(e: any) {

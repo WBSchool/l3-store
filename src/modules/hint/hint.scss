@@ -1,0 +1,17 @@
+.search-hint {
+    margin: 0 4px;
+    margin-bottom: 5px;
+    padding: 4px 6px 8px 6px;
+    display: inline-block;
+    border-radius: 8px;
+    background: var(--system-smoky, #F6F6FA);
+    text-decoration: none;
+    font-size: 22px;
+    line-height: 24px;
+
+    &__content {
+        background: linear-gradient(93deg, #DA15B8 4.93%, #8D06CC 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}

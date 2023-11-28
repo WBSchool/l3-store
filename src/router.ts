@@ -5,9 +5,12 @@ import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
 import { favoriteComp } from './modules/favorite/favorite';
 import { statisticsService } from './services/statistics';
+import { SearchHints } from './modules/searchHints/searchHints';
+
 
 const ROUTES = {
   '/': homepageComp,
+  '/search': SearchHints,
   '/catalog': catalogComp,
   '/product': productDetailComp,
   '/checkout': checkoutComp,

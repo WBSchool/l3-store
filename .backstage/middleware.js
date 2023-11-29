@@ -53,7 +53,7 @@ module.exports = (middlewares, devServer) => {
     }, 2500);
   });
 
-  app.get('/api/makeOrder', (req, res) => {
+  app.post('/api/makeOrder', (req, res) => {
     setTimeout(() => {
       res.json({ success: true });
     }, 2500);

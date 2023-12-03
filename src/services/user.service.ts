@@ -22,6 +22,19 @@ class UserService {
     await localforage.setItem(ID_DB, id);
     return id;
   }
+
+  async sendingEventStatistics<T>(eventType: string, payload: T): Promise<void> {
+    const data = {
+      type: eventType,
+      payload,
+      timestamp: Math.round(new Date().getTime() / 1000)
+    }
+
+    fetch('/api/sendEvent', {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  }
 }
 
 export const userService = new UserService();

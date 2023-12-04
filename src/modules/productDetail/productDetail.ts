@@ -76,9 +76,8 @@ class ProductDetail extends Component {
     if (!this.product) return;
 
     if (this.view.btnFav.classList.contains('btnFav--liked')) {
-      this.view.btnFav.classList.remove('btnFav--liked');
+      favService.removeProductFromFavorites(this.product);
       this._removeFromFavorites();
-
     } else {
       favService.addProductinFavorites(this.product);
       this._setInFavorites();
@@ -88,7 +87,8 @@ class ProductDetail extends Component {
   private _removeFromFavorites() {
     if (!this.product) return;
 
-    favService.removeProductFromFavorites(this.product);
+    this.view.btnFav.classList.remove('btnFav--liked');
+
     this.view.btnFav.querySelector('.svg-icon--like').style.display = 'none';
     this.view.btnFav.querySelector('.svg-icon--heart').style.display = 'inline-block';
   }

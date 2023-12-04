@@ -10,11 +10,6 @@ class Favorites extends Component {
     async render() {
         this.products = await favService.get();
 
-        if (this.products.length < 1) {
-            this.view.root.classList.add('is__empty');
-            return;
-        }
-
         this.products.forEach((product) => {
             const productComp = new Product(product);
             productComp.render();

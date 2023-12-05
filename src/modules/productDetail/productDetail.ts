@@ -1,9 +1,11 @@
+import localforage from 'localforage';
 import { Component } from '../component';
 import { ProductList } from '../productList/productList';
 import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
+import { ID_DB } from '../../services/user.service';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -19,6 +21,7 @@ class ProductDetail extends Component {
   async render() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = Number(urlParams.get('id'));
+    const userId = await localforage.getItem(ID_DB) as string || '';
 
     const productResp = await fetch(`/api/getProduct?id=${productId}`);
     this.product = await productResp.json();
@@ -44,10 +47,10 @@ class ProductDetail extends Component {
       });
 
     fetch('/api/getPopularProducts', {
-        headers: {
-          'x-userid': window.userId
-        }
-      })
+      headers: {
+        'x-userid': userId
+      }
+    })
       .then((res) => res.json())
       .then((products) => {
         this.more.update(products);

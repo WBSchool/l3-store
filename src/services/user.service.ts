@@ -12,7 +12,7 @@ declare global {
 class UserService {
   async init() {
     const id = await this.getId();
-    window.userId = id;
+    console.warn('UserID: ', id);
   }
 
   async getId(): Promise<string> {

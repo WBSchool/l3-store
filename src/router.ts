@@ -3,12 +3,18 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
+import { favoriteComp } from './modules/favorite/favorite';
+import { statisticsService } from './services/statistics';
+import { SearchHints } from './modules/searchHints/searchHints';
+
 
 const ROUTES = {
   '/': homepageComp,
+  '/search': SearchHints,
   '/catalog': catalogComp,
   '/product': productDetailComp,
-  '/checkout': checkoutComp
+  '/checkout': checkoutComp,
+  '/favorite': favoriteComp
 };
 
 export default class Router {
@@ -23,11 +29,15 @@ export default class Router {
   }
 
   route(e: any) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
 
     // @ts-ignore
     const component = ROUTES[window.location.pathname] || notFoundComp;
 
+    const urlPage = window.location.href;
+    statisticsService.routeEvent(urlPage);
     component.attach(this.$appRoot);
     component.render();
   }

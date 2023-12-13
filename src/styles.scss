@@ -120,11 +120,16 @@ img {
   }
 }
 
+.favorite {
+  position: relative;
+  margin-right: 50px;
+}
+
 .cart {
   position: relative;
 }
 
-.cartCounter {
+.cartCounter, .favoriteCounter {
   position: absolute;
   right: -21px;
   top: -10px;

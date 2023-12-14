@@ -68,3 +68,12 @@
     margin-top: 3em;
   }
 }
+
+.btnFav {
+  --stroke-color: #cc1bd8;
+
+  &.btnFavActive {
+    --stroke-color: var(--key-color);
+    --fill-color: var(--key-color);
+  }
+}

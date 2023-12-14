@@ -85,6 +85,9 @@ img {
 }
 
 .btnFav {
+  position: relative;
+  display: flex;
+  cursor: pointer;
   border: 0;
   background: none;
   padding: 0;
@@ -124,7 +127,13 @@ img {
   position: relative;
 }
 
-.cartCounter {
+.favorite {
+  position: relative;
+  margin-right: 30px;
+}
+
+.cartCounter,
+.favoriteCounter {
   position: absolute;
   right: -21px;
   top: -10px;

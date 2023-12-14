@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" src="./favicon.ico">
   <title>Mockberries</title>
 </head>
+
 <body style="visibility: hidden;">
   <header class="header wrap">
     <div class="header__in">
@@ -13,11 +15,16 @@
       <a href="/catalog">Каталог</a>
 
       <div class="header__buttons">
+        <a href="/favorite" class="favorite hide">
+          Избранное
+          <span class="favoriteCounter js__favorite-counter"></span>
+        </a>
         <a href="/checkout" class="cart">
           Корзина
           <span class="cartCounter js__cart-counter"></span>
         </a>
       </div>
+
     </div>
   </header>
 
@@ -37,4 +44,5 @@
 
   <script src="bundle.js"></script>
 </body>
+
 </html>

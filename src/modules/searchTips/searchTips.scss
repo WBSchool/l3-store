@@ -1,0 +1,25 @@
+.search-tips {
+  color: #000;
+  margin: 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  font-family: 'ALS Hauss VF', Arial, Helvetica, sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 550;
+  line-height: 24px;
+
+  &__wrapper {
+    padding: 4px 6px 8px;
+    background-color: #f6f6fa;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  &__tag {
+    background: linear-gradient(93deg, #da15b8 4.93%, #8d06cc 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

@@ -1,4 +1,4 @@
-const MOCK_SEARCH_TAGS = [
+export const MOCK_SEARCH_TAGS = [
   'чехол iphone 13 pro',
   'коляски agex',
   'яндекс станция 2',

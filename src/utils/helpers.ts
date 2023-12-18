@@ -27,3 +27,22 @@ export const formatPrice = (price: number) => {
       .replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽'
   );
 };
+
+/**
+ * Проверка, виден ли элемент в окне просмотра (от 50% видимости)
+ * @param elem HTML элемент
+ * @returns Булевое значение
+ */
+export const isInViewport = (elem: HTMLElement) => {
+  //Определяем положение элемента на экране просмотра
+  let bounding = elem.getBoundingClientRect();
+  
+  //Полечаем высоту и ширину viewport-а
+  let viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+  let viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+  
+  return (
+    bounding.top >= 0 && bounding.top <= viewportHeight - bounding.height / 2 &&
+    bounding.left >= 0 && bounding.left <= viewportWidth - bounding.width / 2
+  )
+};

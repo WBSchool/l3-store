@@ -1,4 +1,5 @@
 import { ProductData } from 'types';
+import { genUUID } from '../utils/helpers';
 
 type AnalyticObj = {
   type: 'route' | 'viewCard' | 'addToCard' | 'purchase';
@@ -8,7 +9,7 @@ type AnalyticObj = {
   timestamp: number;
 };
 
-export const sendAnalytic = {
+class Analytics {
   Route(url: string) {
     const obj: AnalyticObj = {
       type: 'route',
@@ -18,7 +19,7 @@ export const sendAnalytic = {
       timestamp: Date.now()
     };
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
-  },
+  }
 
   ViewCard(Product: ProductData, secretKey: string) {
     const obj: AnalyticObj = {
@@ -30,7 +31,7 @@ export const sendAnalytic = {
       timestamp: Date.now()
     };
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
-  },
+  }
 
   AddToCart(Product: ProductData) {
     const obj: AnalyticObj = {
@@ -41,11 +42,14 @@ export const sendAnalytic = {
       timestamp: Date.now()
     };
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
-  },
+  }
 
-  Purchase(orderID: number, totalPrice: number, productIds: number[]) {
+  Purchase(products: ProductData[]) {
+    const orderID = genUUID();
+    const totalPrice = products.reduce((Sum, Prod) => (Sum += Prod.salePriceU), 0);
+    const productIds = products.map((Prod) => Prod.id);
     const obj: AnalyticObj = {
-      type: 'addToCard',
+      type: 'purchase',
       payload: {
         orderID,
         totalPrice,
@@ -55,4 +59,6 @@ export const sendAnalytic = {
     };
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
   }
-};
+}
+
+export const sendAnalytic = new Analytics();

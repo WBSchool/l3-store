@@ -4,6 +4,7 @@ import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
 import { ProductData } from 'types';
+import { sendAnalytic } from '../../services/analytics.service';
 
 class Checkout extends Component {
   products!: ProductData[];
@@ -29,6 +30,7 @@ class Checkout extends Component {
   }
 
   private async _makeOrder() {
+    sendAnalytic.Purchase(this.products);
     await cartService.clear();
     fetch('/api/makeOrder', {
       method: 'POST',

@@ -20,7 +20,11 @@ class ProductDetail extends Component {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = Number(urlParams.get('id'));
 
-    const productResp = await fetch(`/api/getProduct?id=${productId}`);
+    const productResp = await fetch(`/api/getProduct?id=${productId}`, {
+      headers: {
+        'x-userid': window.userId,
+      }
+    });
     this.product = await productResp.json();
 
     if (!this.product) return;

@@ -3,6 +3,13 @@ import { genUUID } from '../utils/helpers';
 
 const ID_DB = '__wb-userId';
 
+//Добавляем объявление в глобальную область видимости
+declare global {
+  interface Window {
+    userId: string;
+  }
+}
+
 class UserService {
   async init() {
     const id = await this.getId();

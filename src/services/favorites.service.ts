@@ -15,8 +15,7 @@ class FavoritesService {
 
   async changeProduct(productID: ID) {
     const isProdFavorite = await this.isFavorite(productID);
-    isProdFavorite ? this.removeProduct(productID) : this.addProduct(productID);
-    return !isProdFavorite;
+    isProdFavorite ? await this.removeProduct(productID) : await this.addProduct(productID);
   }
 
   async addProduct(productID: ID) {

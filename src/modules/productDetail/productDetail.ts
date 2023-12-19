@@ -4,6 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
+import { favoritesService } from '../../services/favorites.service';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -24,6 +25,7 @@ class ProductDetail extends Component {
     this.product = await productResp.json();
 
     if (!this.product) return;
+    this._setFavorite();
 
     const { id, src, name, description, salePriceU } = this.product;
 
@@ -32,6 +34,7 @@ class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
+    this.view.brnFav.onclick = this._changeFavorite.bind(this);
 
     const isInCart = await cartService.isInCart(this.product);
 
@@ -55,6 +58,23 @@ class ProductDetail extends Component {
 
     cartService.addProduct(this.product);
     this._setInCart();
+  }
+
+  private async _changeFavorite() {
+    if (!this.product) return;
+    await favoritesService.changeProduct(this.product.id);
+    this._setFavorite();
+  }
+
+  private async _setFavorite() {
+    if (!this.product) return;
+    // Заготовка для стилизации кнопки Избранное
+    const isFavorite = await favoritesService.isFavorite(this.product.id);
+    if (isFavorite) {
+      this.view.svgFav.style.setProperty('--key-color', '#ff5100');
+    } else {
+      this.view.svgFav.style.setProperty('--key-color', '#cb11ab');
+    }
   }
 
   private _setInCart() {

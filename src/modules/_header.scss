@@ -15,6 +15,12 @@
     margin-left: auto;
   }
 
+  .header__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+  }
+
   a {
     text-decoration: none;
 

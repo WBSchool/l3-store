@@ -45,15 +45,12 @@ class Analytics {
   }
 
   Purchase(products: ProductData[]) {
-    const orderID = genUUID();
-    const totalPrice = products.reduce((Sum, Prod) => (Sum += Prod.salePriceU), 0);
-    const productIds = products.map((Prod) => Prod.id);
     const obj: AnalyticObj = {
       type: 'purchase',
       payload: {
-        orderID,
-        totalPrice,
-        productIds
+        orderID: genUUID(),
+        totalPrice: products.reduce((Sum, Prod) => (Sum += Prod.salePriceU), 0),
+        productIds: products.map((Prod) => Prod.id)
       },
       timestamp: Date.now()
     };

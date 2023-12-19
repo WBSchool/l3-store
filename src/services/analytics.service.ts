@@ -1,8 +1,8 @@
 import { ProductData } from 'types';
-import { genUUID } from '../utils/helpers';
+import { fetchSecretKey, genUUID } from '../utils/helpers';
 
 type AnalyticObj = {
-  type: 'route' | 'viewCard' | 'addToCard' | 'purchase';
+  type: 'route' | 'viewCard' | 'viewCardPromo' | 'addToCard' | 'purchase';
   payload: {
     [name: string]: any;
   };
@@ -21,16 +21,39 @@ class Analytics {
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
   }
 
-  ViewCard(Product: ProductData, secretKey: string) {
-    const obj: AnalyticObj = {
-      type: 'viewCard',
-      payload: {
-        ...Product,
-        secretKey
-      },
-      timestamp: Date.now()
+  getViewCardAnalytics() {
+    interface rawData {
+      product: ProductData;
+      timestamp: number;
+    }
+
+    let rawData: rawData[] = [];
+    let timeout: undefined | NodeJS.Timeout = undefined;
+
+    return (product: ProductData) => {
+      rawData.push({
+        product: product,
+        timestamp: Date.now()
+      });
+
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        let productsToPush = [...rawData];
+        rawData = [];
+        productsToPush.forEach(async (El) => {
+          const secretKey = await fetchSecretKey(El.product.id);
+          const obj: AnalyticObj = {
+            type: El.product.log ? 'viewCardPromo' : 'viewCard',
+            payload: {
+              ...El.product,
+              secretKey
+            },
+            timestamp: Date.now()
+          };
+          fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
+        });
+      }, 2000);
     };
-    fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
   }
 
   AddToCart(Product: ProductData) {

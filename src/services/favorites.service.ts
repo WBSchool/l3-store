@@ -48,9 +48,13 @@ class FavoritesService {
     const count = products.length >= 10 ? '9+' : products.length;
 
     //@ts-ignore
-    const Elements = document.querySelectorAll('.js__favorites-counter') as HTMLElement[];
+    const Counters = document.querySelectorAll('.js__favorites-counter') as HTMLElement[];
+    //@ts-ignore
+    const Links = document.querySelectorAll('#favorite_link') as HTMLElement[];
 
-    Elements.forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
+    const productsCount = products.length;
+    Links.forEach(($el: HTMLElement) => ($el.style.display = productsCount ? 'flex' : 'none'));
+    Counters.forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
   }
 }
 

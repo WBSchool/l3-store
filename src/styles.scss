@@ -100,7 +100,7 @@ img {
     transition: all 0.3s;
   }
 
-  &.hover svg,
+  &:hover svg,
   &.active svg {
     fill: var(--key-color-dark);
     stroke: var(--key-color-dark);

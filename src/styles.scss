@@ -94,6 +94,16 @@ img {
     width: 32px;
     height: 32px;
     margin-top: 4px;
+    fill: none;
+    stroke: var(--key-color);
+    stroke-width: 2;
+    transition: all 0.3s;
+  }
+
+  &.hover svg,
+  &.active svg {
+    fill: var(--key-color-dark);
+    stroke: var(--key-color-dark);
   }
 }
 
@@ -120,11 +130,12 @@ img {
   }
 }
 
-.cart {
+.cart,
+.favorites {
   position: relative;
 }
 
-.cartCounter {
+.counter {
   position: absolute;
   right: -21px;
   top: -10px;

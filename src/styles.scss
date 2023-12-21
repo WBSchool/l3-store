@@ -97,6 +97,11 @@ img {
   }
 }
 
+.btnFav:hover {
+  opacity: 0.75;
+  cursor: pointer;
+}
+
 .btn {
   text-decoration: none;
   padding: 0.55em 0.8em;
@@ -122,6 +127,7 @@ img {
 
 .cart {
   position: relative;
+  padding-left: 30px;
 }
 
 .cartCounter {

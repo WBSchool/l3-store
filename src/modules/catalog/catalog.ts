@@ -13,8 +13,14 @@ class Catalog extends Component {
     this.productList.attach(this.view.products);
   }
 
+  // Насколько я понял, заголовок на получение товаров нужно добавить только к этому запросу.
+  // Во всех остальных местах он есть.
   async render() {
-    const productsResp = await fetch('/api/getProducts');
+    const productsResp = await fetch('/api/getProducts', {
+      headers: {
+        'x-userid': window.userId
+      }
+    });
     const products = await productsResp.json();
     this.productList.update(products);
   }

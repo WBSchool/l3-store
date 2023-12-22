@@ -31,11 +31,13 @@ class Checkout extends Component {
 
   private async _makeOrder() {
     await cartService.clear();
-    statService.sendCheckoutStat(this.products);
-    fetch('/api/makeOrder', {
+    const response = await fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
+    if (response.ok) {
+      statService.sendCheckoutStat(this.products);
+    }
     window.location.href = '/?isSuccessOrder';
   }
 }

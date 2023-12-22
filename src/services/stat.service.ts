@@ -1,18 +1,16 @@
-import { ProductData, statData } from "types";
+import { ProductData, statPayload } from "types";
 import { genUUID } from "../utils/helpers";
 
 class StatService {
 
-  async sendStat (data: statData) {
-    console.log(data); // Выведение данных в консоль для удобства проверки
+  async sendStat (type: string, payload: statPayload) {
+    console.log({type, payload, timestamp: Date.now()}); // Выведение данных в консоль для удобства проверки
     await fetch('/api/sendEvent', {
-      
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify(data),
-
+      body: JSON.stringify({type, payload, timestamp: Date.now()}),
     }).then((response) => {
       if (!response.ok) {
         console.log('Ошибка отправки');
@@ -20,71 +18,46 @@ class StatService {
     }).catch((e) => {
         console.log(`Ошибка - ${e}`);
     })
-
   }
 
   async sendRouteStat (url: string) {
-
-    const data = {
-      type: 'route',
-      payload: {
-        url,
-      },
-      timestamp: Date.now(),
+    const type = 'route';
+    const payload = {
+      url
     }
-
-    this.sendStat(data);
+    this.sendStat(type, payload);
   }
 
   async sendAddToCartStat (product: ProductData) {
-
-    const data = {
-      type: 'addToCart',
-      payload: {
-        productDetails: product,
-      },
-      timestamp: Date.now(),
-    }
-
-    this.sendStat(data);
-  }
-
+    const type = 'addToCart';
+    const payload = {
+      productDetails: product,
+    };
+      this.sendStat(type, payload);
+  }  
+  
   async sendCheckoutStat (products: ProductData[]) {
-    
     const orderId = genUUID();
     const productsIds = products.map((product) => product.id);
-
     let totalPrice = 0;
     products.forEach((product) => totalPrice += product.salePriceU);
 
-    const data = {
-      type: 'purchase',
-      payload: {
-        orderId,
-        totalPrice,
-        productsIds,
-      },
-      timestamp: Date.now(),
+    const type = 'purchase';
+    const payload =  {
+      orderId,
+      totalPrice,
+      productsIds,
+    };
+      this.sendStat(type, payload); 
     }
 
-    this.sendStat(data);
-  }
-
-  async sendViewportStat (product: ProductData, secretKey: string, timestamp: number) {
-    
-    const type = Object.keys(product.log).length > 0 ? 'viewCardPromo' : 'viewCard';
-
-    const data = {
-      type,
-      payload: {
+    async sendViewportStat (product: ProductData) {
+      const type = Object.keys(product.log).length > 0 ? 'viewCardPromo' : 'viewCard';
+      const payload = {
         productDetails: product,
-        secretKey,
-      },
-      timestamp,
-    }
-
-    this.sendStat(data);
-  }
+      };
+        this.sendStat(type, payload);
+      }  
 }
 
 export const statService = new StatService();

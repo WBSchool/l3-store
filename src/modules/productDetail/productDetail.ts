@@ -4,6 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
+import { favoritesService } from '../../services/favorites.service';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -32,10 +33,17 @@ class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
+    this.view.btnFav.onclick = this._toggleFavorite.bind(this);
 
     const isInCart = await cartService.isInCart(this.product);
+    const isInFavorites = await favoritesService.isInFavorites(this.product);
 
     if (isInCart) this._setInCart();
+    if (isInFavorites) this._setInFalorite()
+    if (await favoritesService.isInFavorites(this.product)) {
+      this._setInFalorite()
+    }
+
 
     fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
@@ -61,6 +69,26 @@ class ProductDetail extends Component {
     this.view.btnBuy.innerText = '✓ В корзине';
     this.view.btnBuy.disabled = true;
   }
+
+  private async _toggleFavorite() {
+    if (!this.product) return;
+    if (await favoritesService.isInFavorites(this.product)) {
+      favoritesService.removeProduct(this.product);
+      this._delInFalorite();
+    } else {
+      favoritesService.addProduct(this.product);
+      this._setInFalorite();
+    }
+  }
+
+  private _setInFalorite() {
+    this.view.btnFav.innerHTML= '<svg class="svg-icon"><use xlink:href="#heart-active"></use></svg>';
+  }
+
+  private _delInFalorite() {
+    this.view.btnFav.innerHTML= '<svg class="svg-icon"><use xlink:href="#heart"></use></svg>';
+  }
+
 }
 
 export const productDetailComp = new ProductDetail(html);

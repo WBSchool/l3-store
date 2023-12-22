@@ -6,7 +6,7 @@ const FAV_DB = '__wb-favorite';
 class FavoriteService {
   
   init() {
-    this._updCounters();
+    this._updLink();
   }
 
   async addProduct(product: ProductData) {
@@ -26,21 +26,26 @@ class FavoriteService {
 
   async set(data: ProductData[]) {
     await localforage.setItem(FAV_DB, data);
-    this._updCounters();
+    this._updLink();
   }
 
   async get(): Promise<ProductData[]> {
     return (await localforage.getItem(FAV_DB)) || [];
   }
 
-  private async _updCounters() {
+  private async _updLink() {
     const products = await this.get();
     const count = products.length >= 10 ? '9+' : products.length;
-    const linkClasses = products.length === 0 ? 'favorite hide' : 'favorite';
-
       //@ts-ignore
     document.querySelectorAll('.js__favorite-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));
-    document.querySelector('.favorite')!.className = String(linkClasses);  
+    document.querySelectorAll('.js__favorite-link').forEach(($el) => {
+      if (products.length > 0) {
+        $el.classList.remove('hide');
+      } else {
+        $el.classList.add('hide');
+      }
+    });
+     
   }
 }
 

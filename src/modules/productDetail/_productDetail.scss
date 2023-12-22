@@ -68,3 +68,9 @@
     margin-top: 3em;
   }
 }
+.btnFav {
+  cursor: pointer;
+}
+.favorite {
+  fill: var(--key-color) !important;
+}

@@ -1,7 +1,11 @@
 // Имитация запроса на сервер для удобства тестирования
 
-export const fetchHints = async function (): Promise<Array<string>> {
+export const fetchHints = async function (): Promise<Array<any>> {
   return new Promise (function (resolve) {
-    setTimeout(() => resolve(['чехол iphone 13 pro', 'коляски agex', 'яндекс станция 2']), 500);
+    setTimeout(() => resolve([
+      {text:'чехол iphone 13 pro', link: '/catalog'},
+      {text: 'коляски agex', link: '/catalog' }, 
+      {text: 'яндекс станция 2', link: '/catalog'}
+    ]), 300);
   })
 }

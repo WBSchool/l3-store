@@ -23,11 +23,11 @@ class Homepage extends Component {
   render() {
 
     fetchHints()
-      .then((data: string[]) => {
+      .then((data: any) => {
         this.searchHints.update(data);
       })
-      .catch(() => {
-        this.searchHints.update(['reserveName', 'reserveName', 'reserveName']);
+      .catch((e) => {
+        console.log(`Ошибка ${e}`);
       })
 
     fetch('/api/getPopularProducts')

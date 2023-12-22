@@ -30,7 +30,7 @@ class Checkout extends Component {
   }
 
   private async _makeOrder() {
-    sendAnalytic.Purchase(this.products);
+    sendAnalytic.sendPurchaseAnalytic(this.products);
     await cartService.clear();
     fetch('/api/makeOrder', {
       method: 'POST',

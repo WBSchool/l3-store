@@ -10,7 +10,7 @@ type AnalyticObj = {
 };
 
 class Analytics {
-  Route(url: string) {
+  sendRouteAnalytic(url: string) {
     const obj: AnalyticObj = {
       type: 'route',
       payload: {
@@ -21,6 +21,7 @@ class Analytics {
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
   }
 
+  // Вот к этому блоку вопросы...
   getViewCardAnalytics() {
     interface rawData {
       product: ProductData;
@@ -56,7 +57,7 @@ class Analytics {
     };
   }
 
-  AddToCart(Product: ProductData) {
+  sendAddToCartAnalytic(Product: ProductData) {
     const obj: AnalyticObj = {
       type: 'addToCard',
       payload: {
@@ -67,7 +68,7 @@ class Analytics {
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
   }
 
-  Purchase(products: ProductData[]) {
+  sendPurchaseAnalytic(products: ProductData[]) {
     const obj: AnalyticObj = {
       type: 'purchase',
       payload: {

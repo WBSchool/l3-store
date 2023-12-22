@@ -26,7 +26,7 @@ export default class Router {
   route(e: any) {
     e.preventDefault();
     const url = window.location.pathname;
-    sendAnalytic.Route(url);
+    sendAnalytic.sendRouteAnalytic(url);
 
     // @ts-ignore
     const component = ROUTES[url] || notFoundComp;

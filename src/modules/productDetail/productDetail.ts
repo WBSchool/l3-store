@@ -54,7 +54,7 @@ class ProductDetail extends Component {
   private _addToCart() {
     if (!this.product) return;
 
-    sendAnalytic.AddToCart(this.product);
+    sendAnalytic.sendAddToCartAnalytic(this.product);
     cartService.addProduct(this.product);
     this._setInCart();
   }

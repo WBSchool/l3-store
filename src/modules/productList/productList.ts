@@ -19,10 +19,10 @@ export class ProductList {
   }
 
   observerCallback(Entities: IntersectionObserverEntry[], _: IntersectionObserver) {
-    Entities.forEach((Ent) => {
-      const target = Ent.target as HTMLAnchorElement;
-      if (Ent.isIntersecting) {
-        if (Ent.target.tagName !== 'A') return;
+    Entities.forEach((Entitie) => {
+      const target = Entitie.target as HTMLAnchorElement;
+      if (Entitie.isIntersecting) {
+        if (Entitie.target.tagName !== 'A') return;
         const { href } = target;
         const ID = +href.split('?id=')[1];
         const product = this.products.find((Prod) => Prod.id === ID);

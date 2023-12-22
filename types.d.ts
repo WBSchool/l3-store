@@ -57,3 +57,9 @@ export type ProductData = {
     src: string;
     description: string;
 }
+
+//Задаём тип для Подсказки
+export type Tip = {
+    product?: string;
+    link?: string;
+}

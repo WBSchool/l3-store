@@ -1,0 +1,45 @@
+.search-tips {
+  width: 900px;
+  height: 48px;
+  display: flex;
+  align-items: baseline;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 550;
+  line-height: 24px;
+  
+  &__text {
+    display: flex;
+    cursor: default;
+  }
+
+  &__block {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: #F6F6FA;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  &__link {
+    padding: 4px 6px 8px 6px;
+    background: linear-gradient(93deg, #DA15B8 4.93%, #8D06CC 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.first-text {
+  padding: 0 8px 0 15px;
+}
+
+.second-text {
+  width: 7px;
+  padding: 0 8px 0 3px;
+}
+
+.third-text {
+  padding: 0 8px;
+}

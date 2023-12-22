@@ -3,6 +3,7 @@ import { Product } from '../product/product';
 import html from './checkout.tpl.html';
 import { formatPrice } from '../../utils/helpers';
 import { cartService } from '../../services/cart.service';
+import { statService } from '../../services/stat.service';
 import { ProductData } from 'types';
 
 class Checkout extends Component {
@@ -17,7 +18,7 @@ class Checkout extends Component {
     }
 
     this.products.forEach((product) => {
-      const productComp = new Product(product, { isHorizontal: true });
+      const productComp = new Product(product, { isHorizontal: true, isStatNotRequired: true });
       productComp.render();
       productComp.attach(this.view.cart);
     });
@@ -30,10 +31,13 @@ class Checkout extends Component {
 
   private async _makeOrder() {
     await cartService.clear();
-    fetch('/api/makeOrder', {
+    const response = await fetch('/api/makeOrder', {
       method: 'POST',
       body: JSON.stringify(this.products)
     });
+    if (response.ok) {
+      statService.sendCheckoutStat(this.products);
+    }
     window.location.href = '/?isSuccessOrder';
   }
 }

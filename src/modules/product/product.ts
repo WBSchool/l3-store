@@ -3,6 +3,7 @@ import { View } from '../../utils/view';
 import { formatPrice } from '../../utils/helpers'
 import html from './product.tpl.html';
 import { ProductData } from 'types';
+import { statService } from '../../services/stat.service';
 
 type ProductComponentParams = { [key: string]: any };
 
@@ -10,6 +11,7 @@ export class Product {
   view: View;
   product: ProductData;
   params: ProductComponentParams;
+  observer!: IntersectionObserver;
 
   constructor(product: ProductData, params: ProductComponentParams = {}) {
     this.product = product;
@@ -29,6 +31,18 @@ export class Product {
     this.view.title.innerText = name;
     this.view.price.innerText = formatPrice(salePriceU);
 
-    if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal')
+    this.observer = new IntersectionObserver(this._viewportCallback.bind(this), {threshold: 0.5});
+    if (!this.params.isStatNotRequired) this.observer.observe(this.view.root);
+
+    if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal');
+  }
+
+  private _viewportCallback (entries: any, observer: IntersectionObserver) {
+    entries.forEach((entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting) {
+        statService.sendViewportStat(this.product);
+        observer.unobserve(entry.target);
+      }
+    })
   }
 }

@@ -4,6 +4,7 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
+import { analyticsService } from '../../services/analytics.service';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -48,12 +49,22 @@ class ProductDetail extends Component {
       .then((products) => {
         this.more.update(products);
       });
+
+    //Передаем аналитику попадания товаров во viewport после рендера страницы
+    analyticsService.processProducts(Array.from(this.view.more.querySelectorAll('.product')), this.more.products);
+      
+    //Вешаем слушатель события на скролл (по завершению прокрутки страницы)
+    document.addEventListener('scrollend', () => {
+      analyticsService.processProducts(Array.from(this.view.more.querySelectorAll('.product')), this.more.products);
+    });
   }
 
   private _addToCart() {
     if (!this.product) return;
 
     cartService.addProduct(this.product);
+    //Передаем аналитику при добавлении товара в корзину
+    analyticsService.eventAddProductToCart(this.product);
     this._setInCart();
   }
 

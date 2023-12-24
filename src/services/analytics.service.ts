@@ -9,18 +9,21 @@ type AnalyticObj = {
   timestamp: number;
 };
 
-interface ViewCardAnalyticsInstance {
-  product: ProductData;
-  timestamp: number;
+interface ViewCardAnalyticsPayload extends ProductData {
+  secretKey: unknown;
+}
+
+interface ViewCardAnalyticsInstance extends AnalyticObj {
+  payload: ViewCardAnalyticsPayload;
 }
 
 class Analytics {
-  viewCardAnalyticsStorage: ViewCardAnalyticsInstance[];
-  timeout: undefined | NodeJS.Timeout;
+  private _viewCardAnalyticsStorage: ViewCardAnalyticsInstance[];
+  private _sendViewCardAnalyticsTimeout: undefined | NodeJS.Timeout;
 
   constructor() {
-    this.viewCardAnalyticsStorage = [];
-    this.timeout = undefined;
+    this._viewCardAnalyticsStorage = [];
+    this._sendViewCardAnalyticsTimeout = undefined;
   }
 
   sendRouteAnalytic(url: string) {
@@ -34,28 +37,36 @@ class Analytics {
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
   }
 
-  sendviewCardAnalytic(product: ProductData) {
-    this.viewCardAnalyticsStorage.push({
-      product: product,
+  async sendViewCardAnalytic(product: ProductData) {
+    const secretKey = await fetchSecretKey(product.id);
+    const analyticObj: AnalyticObj = {
+      type: product.log ? 'viewCardPromo' : 'viewCard',
+      payload: {
+        ...product,
+        secretKey
+      },
+      timestamp: Date.now()
+    };
+    fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(analyticObj) });
+  }
+
+  // Альтарнативный вараинт отправки аналитики
+  // попадания каторчки товара во вьюпорт - массивом
+  async sendViewCardArrayAnalytic(product: ProductData) {
+    const secretKey = await fetchSecretKey(product.id);
+    this._viewCardAnalyticsStorage.push({
+      type: product.log ? 'viewCardPromo' : 'viewCard',
+      payload: {
+        ...product,
+        secretKey
+      },
       timestamp: Date.now()
     });
 
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      let productsToPush = [...this.viewCardAnalyticsStorage];
-      this.viewCardAnalyticsStorage = [];
-      productsToPush.forEach(async (El) => {
-        const secretKey = await fetchSecretKey(El.product.id);
-        const obj: AnalyticObj = {
-          type: El.product.log ? 'viewCardPromo' : 'viewCard',
-          payload: {
-            ...El.product,
-            secretKey
-          },
-          timestamp: Date.now()
-        };
-        fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
-      });
+    clearTimeout(this._sendViewCardAnalyticsTimeout);
+    this._sendViewCardAnalyticsTimeout = setTimeout(() => {
+      fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(this._viewCardAnalyticsStorage) });
+      this._viewCardAnalyticsStorage = [];
     }, 2000);
   }
 

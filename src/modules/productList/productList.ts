@@ -9,13 +9,11 @@ export class ProductList {
   view: View;
   products: ProductData[];
   observer: IntersectionObserver;
-  sendCardViewAnalytic: (product: ProductData) => void;
 
   constructor() {
     this.products = [];
     this.view = new ViewTemplate(html).cloneView();
     this.observer = new IntersectionObserver(this.observerCallback.bind(this), {});
-    this.sendCardViewAnalytic = sendAnalytic.getViewCardAnalytics();
   }
 
   observerCallback(Entities: IntersectionObserverEntry[], _: IntersectionObserver) {
@@ -27,7 +25,7 @@ export class ProductList {
         const ID = +href.split('?id=')[1];
         const product = this.products.find((Prod) => Prod.id === ID);
         if (!product) return;
-        this.sendCardViewAnalytic(product);
+        sendAnalytic.sendViewCardAnalytic(product)
       }
     });
   }

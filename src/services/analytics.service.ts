@@ -52,7 +52,6 @@ class Analytics {
       timestamp: Date.now()
     };
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(analyticObj) });
-    console.log(analyticObj.type , analyticObj.payload.log)
   }
 
   // Альтарнативный вараинт отправки аналитики

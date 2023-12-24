@@ -10,7 +10,6 @@ class CartService {
 
   async addProduct(product: ProductData) {
     const products = await this.get();
-    console.log(product);
     await this.set([...products, product]);
   }
 

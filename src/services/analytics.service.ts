@@ -9,7 +9,20 @@ type AnalyticObj = {
   timestamp: number;
 };
 
+interface ViewCardAnalyticsInstance {
+  product: ProductData;
+  timestamp: number;
+}
+
 class Analytics {
+  viewCardAnalyticsStorage: ViewCardAnalyticsInstance[];
+  timeout: undefined | NodeJS.Timeout;
+
+  constructor() {
+    this.viewCardAnalyticsStorage = [];
+    this.timeout = undefined;
+  }
+
   sendRouteAnalytic(url: string) {
     const obj: AnalyticObj = {
       type: 'route',
@@ -21,40 +34,29 @@ class Analytics {
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
   }
 
-  // Вот к этому блоку вопросы...
-  getViewCardAnalytics() {
-    interface rawData {
-      product: ProductData;
-      timestamp: number;
-    }
+  sendviewCardAnalytic(product: ProductData) {
+    this.viewCardAnalyticsStorage.push({
+      product: product,
+      timestamp: Date.now()
+    });
 
-    let rawData: rawData[] = [];
-    let timeout: undefined | NodeJS.Timeout = undefined;
-
-    return (product: ProductData) => {
-      rawData.push({
-        product: product,
-        timestamp: Date.now()
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      let productsToPush = [...this.viewCardAnalyticsStorage];
+      this.viewCardAnalyticsStorage = [];
+      productsToPush.forEach(async (El) => {
+        const secretKey = await fetchSecretKey(El.product.id);
+        const obj: AnalyticObj = {
+          type: El.product.log ? 'viewCardPromo' : 'viewCard',
+          payload: {
+            ...El.product,
+            secretKey
+          },
+          timestamp: Date.now()
+        };
+        fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
       });
-
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        let productsToPush = [...rawData];
-        rawData = [];
-        productsToPush.forEach(async (El) => {
-          const secretKey = await fetchSecretKey(El.product.id);
-          const obj: AnalyticObj = {
-            type: El.product.log ? 'viewCardPromo' : 'viewCard',
-            payload: {
-              ...El.product,
-              secretKey
-            },
-            timestamp: Date.now()
-          };
-          fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(obj) });
-        });
-      }, 2000);
-    };
+    }, 2000);
   }
 
   sendAddToCartAnalytic(Product: ProductData) {

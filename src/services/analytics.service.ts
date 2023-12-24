@@ -17,6 +17,10 @@ interface ViewCardAnalyticsInstance extends AnalyticObj {
   payload: ViewCardAnalyticsPayload;
 }
 
+function isEmptyProductLog(product: ProductData) {
+  return !Boolean(Object.keys(product.log).length)
+}
+
 class Analytics {
   private _viewCardAnalyticsStorage: ViewCardAnalyticsInstance[];
   private _sendViewCardAnalyticsTimeout: undefined | NodeJS.Timeout;
@@ -40,7 +44,7 @@ class Analytics {
   async sendViewCardAnalytic(product: ProductData) {
     const secretKey = await fetchSecretKey(product.id);
     const analyticObj: AnalyticObj = {
-      type: product.log ? 'viewCardPromo' : 'viewCard',
+      type: isEmptyProductLog(product) ? 'viewCard' : 'viewCardPromo',
       payload: {
         ...product,
         secretKey
@@ -48,6 +52,7 @@ class Analytics {
       timestamp: Date.now()
     };
     fetch('/api/sendEvent', { method: 'POST', body: JSON.stringify(analyticObj) });
+    console.log(analyticObj.type , analyticObj.payload.log)
   }
 
   // Альтарнативный вараинт отправки аналитики
@@ -55,7 +60,7 @@ class Analytics {
   async sendViewCardArrayAnalytic(product: ProductData) {
     const secretKey = await fetchSecretKey(product.id);
     this._viewCardAnalyticsStorage.push({
-      type: product.log ? 'viewCardPromo' : 'viewCard',
+      type: isEmptyProductLog(product) ? 'viewCard' : 'viewCardPromo',
       payload: {
         ...product,
         secretKey

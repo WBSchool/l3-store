@@ -14,12 +14,12 @@ class Homepage extends Component {
     this.popularProducts.attach(this.view.popular);
   }
 
-  render() {
+  async render() {
     fetch('/api/getPopularProducts', {
-        headers: {
-          'x-userid': window.userId,
-        }
-  })
+      headers: {
+        UserID: window.userId
+      }
+    })
       .then((res) => res.json())
       .then((products) => {
         this.popularProducts.update(products);

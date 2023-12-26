@@ -95,6 +95,28 @@ img {
     height: 32px;
     margin-top: 4px;
   }
+
+  > .svg-icon {
+    &:first-child {
+      display: block;
+    }
+
+    &:last-child {
+      display: none;
+    }
+  }
+
+  &.is__active {
+    > .svg-icon {
+      &:first-child {
+        display: none;
+      }
+
+      &:last-child {
+        display: block;
+      }
+    }
+  }
 }
 
 .btn {
@@ -120,11 +142,11 @@ img {
   }
 }
 
-.cart {
+.link {
   position: relative;
 }
 
-.cartCounter {
+.counter {
   position: absolute;
   right: -21px;
   top: -10px;

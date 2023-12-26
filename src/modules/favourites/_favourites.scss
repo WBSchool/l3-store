@@ -1,0 +1,19 @@
+.favourites {
+  &__in {
+    margin-top: 30px;
+  }
+
+  &__empty {
+    display: none;
+  }
+
+  &.is__empty {
+    .favourites__empty {
+      display: block;
+    }
+
+    .favourites__in {
+      display: none;
+    }
+  }
+}

@@ -4,6 +4,9 @@ import { formatPrice } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
+import { favoriteService } from '../../services/favorite.service';
+import { statisticsService } from '../../services/statistics';
+import { userService } from '../../services/user.service';
 
 class ProductDetail extends Component {
   more: ProductList;
@@ -32,6 +35,13 @@ class ProductDetail extends Component {
     this.view.description.innerText = description;
     this.view.price.innerText = formatPrice(salePriceU);
     this.view.btnBuy.onclick = this._addToCart.bind(this);
+    this.view.btnFav.onclick = this._addFavCart.bind(this);
+
+    const isInFav = await favoriteService.isInFav(this.product);
+
+    if (isInFav) {
+      this.view.btnFav.classList.toggle('is__active');
+    }
 
     const isInCart = await cartService.isInCart(this.product);
 
@@ -40,10 +50,18 @@ class ProductDetail extends Component {
     fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
       .then((secretKey) => {
+        if (this.product) {
+          statisticsService.viewCardEvent(this.product, secretKey);
+        }
+
         this.view.secretKey.setAttribute('content', secretKey);
       });
-
-    fetch('/api/getPopularProducts')
+      const userId = await userService.getId();
+      fetch('/api/getPopularProducts', {
+        headers: {
+          'x-userid': userId,
+        }
+      })
       .then((res) => res.json())
       .then((products) => {
         this.more.update(products);
@@ -54,7 +72,22 @@ class ProductDetail extends Component {
     if (!this.product) return;
 
     cartService.addProduct(this.product);
+    if (this.product) {
+      statisticsService.addtoCardEvent(this.product);
+    }
     this._setInCart();
+  }
+
+  private async _addFavCart() {
+    if (!this.product) return;
+
+    if (await favoriteService.isInFav(this.product)) {
+      favoriteService.removeProduct(this.product);
+      this.view.btnFav.classList.remove('is__active');
+    } else {
+      favoriteService.addProduct(this.product);
+      this.view.btnFav.classList.add('is__active');
+    }
   }
 
   private _setInCart() {

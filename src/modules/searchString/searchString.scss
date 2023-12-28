@@ -1,0 +1,76 @@
+.searchStringComponent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.search-frame {
+  height: 60px;
+  background: linear-gradient(102.42deg, #da15b8 59.69%, #8d06cc 100%);
+  border-radius: 26px;
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-string {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  flex-grow: 1;
+  border-radius: 23px;
+}
+
+.search-input {
+  flex-grow: 1;
+  height: 60px;
+  border: none;
+  padding: 0;
+  font-size: 30px;
+  font-weight: 550;
+  line-height: 60px;
+  letter-spacing: -0.01em;
+  text-align: left;
+}
+
+.search-input::placeholder {
+  font-size: 30px;
+  font-weight: 550;
+  line-height: 60px;
+  letter-spacing: -0.01em;
+  text-align: left;
+  color: rgba(230, 225, 239, 1);
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.hints-line {
+  font-size: 22px;
+  font-weight: 550;
+  line-height: 24px;
+  letter-spacing: 0px;
+  text-align: left;
+  padding: 0 32px;
+}
+
+.hint-link {
+    text-decoration: none;
+    background-color: rgba(246, 246, 250, 1);
+    padding: 4px 6px 8px 6px;
+    border-radius: 8px;
+    background-image: linear-gradient(92.97deg, #DA15B8 4.93%, #8D06CC 100%); /* Градиентный фон текста */
+    color: transparent; /* Делаем текст прозрачным */
+    background-clip: text; /* Применяем фоновый градиент к тексту */
+}
+
+.hint-plate {
+    background-color: rgba(246, 246, 250, 1);
+    border-radius: 8px;
+    height: 32px;
+}

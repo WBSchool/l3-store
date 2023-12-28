@@ -1,8 +1,8 @@
-import tradeExmaples, {tradeLink} from 'src/utils/tradeExmaples';
+import tradeExmaples, {tradeLink} from '../../../src/utils/tradeExmaples';
 import { Component } from '../component';
 import html from './searchString.tpl.html';
 
-class SearchLine extends Component {
+class SearchLineComp extends Component {
   constructor(props: any) {
     super(props);
   }
@@ -38,4 +38,4 @@ class SearchLine extends Component {
   }
 }
 
-export const searchLine = new SearchLine(html);
+export const searchLineComp = new SearchLineComp(html);

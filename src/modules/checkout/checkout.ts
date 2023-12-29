@@ -32,17 +32,15 @@ class Checkout extends Component {
       productComp.attach(this.view.cart);
     });
 
-    const totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
-    this.view.price.innerText = formatPrice(totalPrice);
+    this.totalPrice = this.products.reduce((acc, product) => (acc += product.salePriceU), 0);
+    this.view.price.innerText = formatPrice(this.totalPrice);
 
     this.view.btnOrder.onclick = this._makeOrder.bind(this);
   }
 
   _getProductIds() {
     const productIds: number[] = []
-    this.products.forEach((product) => {
-      productIds.push(product.id)
-    });
+    this.products.forEach((product) => productIds.push(product.id));
 
     return productIds
   }

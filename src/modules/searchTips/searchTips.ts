@@ -22,10 +22,6 @@ export class SearchTips {
         this.render();
     }
 
-    _printSearchTips() {
-        
-    }
-
     render() {
         this.view.root.innerHTML = '';
 
@@ -34,7 +30,7 @@ export class SearchTips {
         
         for (let i = 0; i < this.tips.slice(0, 3).length; i++) {
             if (!this.tips?.length) return;
-            
+
             if (this.tips.length === 1) {
                 tipsContainer.innerHTML = `Например, <span class="tips">${this.tips[0].name}</span>`;
             } else if (this.tips.length === 2) {

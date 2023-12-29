@@ -3,6 +3,7 @@ import { ProductData } from 'types';
 
 const DB = '__wb-cart';
 
+// Сервис для добавления карты в корзину
 class CartService {
   init() {
     this._updCounters();

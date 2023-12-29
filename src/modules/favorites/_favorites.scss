@@ -1,0 +1,26 @@
+.favorites{
+  &__empty {
+    display: none;
+  }
+  &__cart {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 20px 10px;
+  }
+  .delete_full {
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  &.is__empty {
+    .favorites__empty {
+      display: block;
+
+    }
+    .favorites__in {
+      display: none;
+    }
+  }
+}

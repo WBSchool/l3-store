@@ -39,10 +39,10 @@ class FavoritsService {
 
   private async _updCounters() {
     const products = await this.get();
+    const count = products.length >= 10 ? '9+' : products.length;
     
     // @ts-ignore
-    products.length <= 0 ? document.querySelector('.js__favorites').style.display = 'none' : document.querySelector('.js__favorites').style.display = '';
-    const count = products.length >= 10 ? '9+' : products.length;
+    products.length > 0 ? document.querySelector('.js__favorites').style.display = 'block' : document.querySelector('.js__favorites').style.display = 'none';
 
     // @ts-ignore
     document.querySelectorAll('.js__favorites-counter').forEach(($el: HTMLElement) => ($el.innerText = String(count || '')));

@@ -39,11 +39,7 @@ class ProductDetail extends Component {
     const isInFavorites = await favoritesService.isInFavorites(this.product);
 
     if (isInCart) this._setInCart();
-    if (isInFavorites) this._setInFalorite()
-    if (await favoritesService.isInFavorites(this.product)) {
-      this._setInFalorite()
-    }
-
+    if (isInFavorites) this._setInFavorite()
 
     fetch(`/api/getProductSecretKey?id=${id}`)
       .then((res) => res.json())
@@ -72,20 +68,21 @@ class ProductDetail extends Component {
 
   private async _toggleFavorite() {
     if (!this.product) return;
+    
     if (await favoritesService.isInFavorites(this.product)) {
       favoritesService.removeProduct(this.product);
-      this._delInFalorite();
+      this._delInFavorite();
     } else {
       favoritesService.addProduct(this.product);
-      this._setInFalorite();
+      this._setInFavorite();
     }
   }
 
-  private _setInFalorite() {
+  private _setInFavorite() {
     this.view.btnFav.innerHTML= '<svg class="svg-icon"><use xlink:href="#heart-active"></use></svg>';
   }
 
-  private _delInFalorite() {
+  private _delInFavorite() {
     this.view.btnFav.innerHTML= '<svg class="svg-icon"><use xlink:href="#heart"></use></svg>';
   }
 

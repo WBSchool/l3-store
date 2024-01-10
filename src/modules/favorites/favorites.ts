@@ -11,7 +11,7 @@ class Favorites extends Component {
   constructor(props: any) {
     super(props);
     this.favoritesProductsList = new ProductList();
-    this.favoritesProductsList.attach(this.view.popular);
+    this.favoritesProductsList.attach(this.view.list);
   }
 
   async render() {

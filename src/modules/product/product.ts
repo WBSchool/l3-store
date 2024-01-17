@@ -25,6 +25,8 @@ export class Product {
     const { id, name, src, salePriceU } = this.product;
 
     this.view.root.setAttribute('href', `/product?id=${id}`);
+    // Добавила data-тег 
+    this.view.root.setAttribute('data-id', String(id));
     this.view.img.setAttribute('src', src);
     this.view.title.innerText = name;
     this.view.price.innerText = formatPrice(salePriceU);

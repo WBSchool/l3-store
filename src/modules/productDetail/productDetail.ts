@@ -5,6 +5,7 @@ import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
 import { favoriteService } from '../../services/favorite.service';
+import { eventAnaliticsService } from '../../services/eventAnalitics.service';
 
 const heartIn = `
   <svg viewBox="2 2 13 13" xmlns="http://www.w3.org/2000/svg">
@@ -79,6 +80,8 @@ class ProductDetail extends Component {
     if (!this.product) return;
 
     cartService.addProduct(this.product);
+    // отправляем аналитику добавление товара в корзину
+    eventAnaliticsService.addToCart(this.product);
     this._setInCart();
   }
 

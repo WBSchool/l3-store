@@ -19,6 +19,7 @@ class FavoriteService {
   async removeProduct(product: ProductData) {
     const products = await this.get();
     await this.set(products.filter(({ id }) => id !== product.id));
+    this._showFavorite();
   }
 
   //получить товары, добавленные в избранное
@@ -41,7 +42,9 @@ class FavoriteService {
     const products = await this.get();
 
     if (products.length > 0) {
-      document.querySelector('.fav')!.classList.remove('hide');
+      (document.querySelector('.fav') as HTMLElement).classList.remove('hide');
+    } else {
+      (document.querySelector('.fav') as HTMLElement).classList.add('hide');
     }
   }
 }

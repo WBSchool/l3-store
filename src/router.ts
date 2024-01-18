@@ -3,12 +3,17 @@ import { notFoundComp } from './modules/notFound/notFound';
 import { homepageComp } from './modules/homepage/homepage';
 import { productDetailComp } from './modules/productDetail/productDetail';
 import { checkoutComp } from './modules/checkout/checkout';
+import { favoriteComp } from './modules/favorite/favorite';
+import { eventAnaliticsService } from './services/eventAnalitics.service';
 
 const ROUTES = {
   '/': homepageComp,
   '/catalog': catalogComp,
   '/product': productDetailComp,
-  '/checkout': checkoutComp
+  '/checkout': checkoutComp,
+
+  // добавила путь к странице "Избранное"
+ '/favorite': favoriteComp
 };
 
 export default class Router {
@@ -28,6 +33,7 @@ export default class Router {
     // @ts-ignore
     const component = ROUTES[window.location.pathname] || notFoundComp;
 
+    eventAnaliticsService.routePages(window.location.href);
     component.attach(this.$appRoot);
     component.render();
   }

@@ -40,7 +40,7 @@ class Checkout extends Component {
     if (res.ok) {
       eventAnaliticsService.sendOrder(this.products);
     }
-    window.location.href = '/?isSuccessOrder';
+   // window.location.href = '/?isSuccessOrder';
   }
 }
 

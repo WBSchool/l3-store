@@ -1,4 +1,4 @@
-import { genUUID, isElementInViewport } from '../utils/helpers';
+import { formatPrice, genUUID, isElementInViewport } from '../utils/helpers';
 import { ProductData } from 'types';
 
 class EventAnaliticService {
@@ -66,12 +66,12 @@ class EventAnaliticService {
     const productIds = products.map((product) => product.id);
     let totalPrice = 0;
     products.forEach((product) => totalPrice += product.salePriceU);
-
+    
     const data = {
       type: 'purchase',
       payload: {
         orderId,
-        totalPrice,
+        totalPrice: Math.round(totalPrice / 1000),
         productIds
       },
       timestamp: Date.now()

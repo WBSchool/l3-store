@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { ProductList } from '../productList/productList';
-import { formatPrice } from '../../utils/helpers';
+import { formatPrice, request } from '../../utils/helpers';
 import { ProductData } from 'types';
 import html from './productDetail.tpl.html';
 import { cartService } from '../../services/cart.service';
@@ -43,11 +43,9 @@ class ProductDetail extends Component {
         this.view.secretKey.setAttribute('content', secretKey);
       });
 
-    fetch('/api/getPopularProducts', {
-      headers: {
-        'x-userid': window.userId
-      }
-    })
+    const req = await request();
+
+    fetch('/api/getPopularProducts', req)
       .then((res) => res.json())
       .then((products) => {
         this.more.update(products);

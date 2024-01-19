@@ -1,3 +1,5 @@
+import { userService } from "../services/user.service";
+
 export const genUUID = () => {
     let d = new Date().getTime();
     if (window.performance && typeof window.performance.now === 'function') {
@@ -27,3 +29,15 @@ export const formatPrice = (price: number) => {
       .replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽'
   );
 };
+
+
+export const request = async function () {
+  
+  const userId = await userService.getId();
+  
+  return {
+    headers: {
+        'x-userId': userId,
+    }
+  }
+}

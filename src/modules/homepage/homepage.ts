@@ -1,4 +1,4 @@
-import { addElement } from '../../utils/helpers';
+import { addElement, request } from '../../utils/helpers';
 import { Component } from '../component';
 import html from './homepage.tpl.html';
 
@@ -14,12 +14,10 @@ class Homepage extends Component {
     this.popularProducts.attach(this.view.popular);
   }
 
-  render() {
-    fetch('/api/getPopularProducts', {
-      headers: {
-        'x-userid': window.userId,
-      }
-})
+  async render() {
+    const req = await request();
+    
+    fetch('/api/getPopularProducts', req)
       .then((res) => res.json())
       .then((products) => {
         this.popularProducts.update(products);

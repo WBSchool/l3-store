@@ -2,7 +2,7 @@ import { Component } from '../component';
 import html from './catalog.tpl.html';
 
 import { ProductList } from '../productList/productList';
-
+import { request } from '../../utils/helpers';
 class Catalog extends Component {
   productList: ProductList;
 
@@ -14,7 +14,8 @@ class Catalog extends Component {
   }
 
   async render() {
-    const productsResp = await fetch('/api/getProducts');
+    const req = await request();
+    const productsResp = await fetch('/api/getProducts', req);
     const products = await productsResp.json();
     this.productList.update(products);
   }

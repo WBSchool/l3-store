@@ -57,3 +57,12 @@ export type ProductData = {
     src: string;
     description: string;
 }
+
+// Типизирую userId, без этого ругается
+declare global {
+    interface Window {
+      userId: string; 
+    }
+}
+
+export default global;

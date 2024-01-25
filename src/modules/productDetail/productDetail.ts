@@ -44,10 +44,10 @@ class ProductDetail extends Component {
       });
 
     fetch('/api/getPopularProducts', {
-        headers: {
-          'x-userid': window.userId
-        }
-      })
+      headers: {
+        UserID: window.userId
+      }
+    })
       .then((res) => res.json())
       .then((products) => {
         this.more.update(products);

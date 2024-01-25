@@ -1,6 +1,6 @@
 import { ViewTemplate } from '../../utils/viewTemplate';
 import { View } from '../../utils/view';
-import { formatPrice } from '../../utils/helpers'
+import { formatPrice } from '../../utils/helpers';
 import html from './product.tpl.html';
 import { ProductData } from 'types';
 
@@ -29,6 +29,6 @@ export class Product {
     this.view.title.innerText = name;
     this.view.price.innerText = formatPrice(salePriceU);
 
-    if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal')
+    if (this.params.isHorizontal) this.view.root.classList.add('is__horizontal');
   }
 }

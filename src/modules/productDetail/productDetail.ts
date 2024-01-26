@@ -62,7 +62,7 @@ class ProductDetail extends Component {
     this._setInCart();
   }
 
-  // добавление в избраное
+  // добавление в избранное
   private _addToFavorites() {
     console.log(this.product);
     if (!this.product) return;
@@ -70,7 +70,7 @@ class ProductDetail extends Component {
     favoriteService.addProductFavorite(this.product);
     this._setInFavorites();
   }
-  // удаление из избраного
+  // удаление из избранного
   private _removeProductFavorite() {
     if (!this.product) return;
 
@@ -84,7 +84,7 @@ class ProductDetail extends Component {
     this.view.btnBuy.disabled = true;
   }
 
-  // добавление в избраное
+  // добавление в избранное
   private _setInFavorites() {
     this.view.heart.classList.add('hide');
     this.view.heartActive.classList.remove('hide');

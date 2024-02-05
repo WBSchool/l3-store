@@ -10,10 +10,7 @@
     display: flex;
     margin-bottom: 10px;
   }
-  &__icon {
-    width: 40px;
-    height: 40px;
-  }
+
   &__button {
     position: absolute;
     border: 0;
@@ -49,7 +46,6 @@
 
     input {
       line-height: inherit;
-      color: #2e3750;
       min-width: 12em;
       height: 40px;
       width: 700px;
@@ -75,6 +71,16 @@
       text-decoration: none;
     }
   }
+  &__tips-box {
+    background-color: whitesmoke;
+    width: 690px;
+    border-radius: 20px;
+    padding: 5px;
+    box-shadow: 1px 1px 2px hsla(0, 0%, 33%, 0.227);
+  }
+  &__link a {
+    text-decoration: none;
+  }
 }
 .search-icon {
   bottom: 2px;
@@ -82,4 +88,10 @@
 .menu-icon {
   right: 6px;
   bottom: 2px;
+}
+.options {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
